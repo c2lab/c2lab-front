@@ -11,31 +11,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="semantic/dist/semantic.min.css">
   <link rel="stylesheet" href="app.css">
-  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
-  <ul class="menu">
-    <li><a href="#!/view1">view1</a></li>
-    <li><a href="#!/view2">view2</a></li>
-  </ul>
+<body >
 
+  <div class="ui secondary pointing menu" ng-controller="mainCtrl">
+    <a class="active item">
+      Galeria
+    </a>
+    <a class="item">
+      Ejemplos
+    </a>
+    <a class="item">
+      Tutoriales
+    </a>
+    <a class="item">
+      Social
+    </a>
+    <div class="right menu">
+      <div class="item">
+        <div class="ui icon input">
+          <input type="text" placeholder="Search...">
+          <i class="search link icon"></i>
+        </div>
+      </div>
+      <a class="ui item"
+         ng-click="auth.login()">
+        Login
+      </a>
+    </div>
+  </div>
+  <div id="main" class="ui basic segment" ng-view>
+  </div>
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div ng-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="semantic/dist/semantic.min.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0/8.7/auth0.min.js"></script>
+  <script type="text/javascript" src="angular-auth0.js"></script>
   <script src="app.js"></script>
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
+  <script src="gallery/gallery.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
