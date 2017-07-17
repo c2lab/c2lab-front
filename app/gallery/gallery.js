@@ -11,4 +11,10 @@ angular.module('myApp.gallery', ['ngRoute'])
 
 .controller('GalleryCtrl', [ "$scope", "authService", function($scope, authService) {
   $scope.auth = authService
+
+  $(document).ready(function() {
+    $(".ui.dimmer").dimmer({
+      on: "hover"
+    })
+  })
 }]);

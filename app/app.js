@@ -31,12 +31,6 @@ angular.module('myApp', [
     
 .controller("mainCtrl", [ "$scope", "authService", function ($scope, authService) {
   $scope.auth = authService
-
-  $(document).ready(function() {
-    $(".ui.dimmer").dimmer({
-      on: "hover"
-    })
-  })
 }])
     
 .service("authService", ["angularAuth0", function authService(angularAuth0) {
