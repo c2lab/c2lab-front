@@ -5,8 +5,6 @@ angular.module('myApp', [
   'auth0.auth0',
   'ngRoute',
   'myApp.gallery',
-  'myApp.view1',
-  'myApp.view2',
   'myApp.version'
 ])
     
