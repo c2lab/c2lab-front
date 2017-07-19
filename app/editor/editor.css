@@ -1,0 +1,34 @@
+
+#editor {
+    /*flex: 1;*/
+    margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 1%;
+    width: 85%;
+}
+
+#menu {
+    width: 13%;
+    bottom: 0%;
+}
+
+#menu > .button {
+    border-top: 1px solid rgba(34,36,38,.15);
+    padding: 1em 1em;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+#menu > .button:last-child {
+    border-bottom: 1px solid rgba(34,36,38,.15);
+}
+
+#menu > .button:hover {
+    background-color: rgba(34,36,38,.15);
+}
+
+#main {
+    flex: 1;
+}
