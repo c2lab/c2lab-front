@@ -16,6 +16,6 @@ body {
 #footer {
   text-align: center;
   vertical-align: middle;
-  border-top: solid 2px lightgrey;
+  border-top: 2px solid rgba(34,36,38,.15);
 }
 
