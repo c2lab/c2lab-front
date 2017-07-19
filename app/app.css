@@ -2,3 +2,20 @@
   color: cornflowerblue
 }
 
+body {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+#main {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+#footer {
+  text-align: center;
+  vertical-align: middle;
+  border-top: solid 2px lightgrey;
+}
+
