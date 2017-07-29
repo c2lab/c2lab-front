@@ -5,6 +5,7 @@ angular.module('myApp', [
   'auth0.auth0',
   'ngRoute',
   'myApp.gallery',
+  'myApp.sketchSvc',
   'myApp.editor',
   'myApp.version'
 ])
