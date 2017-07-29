@@ -16,5 +16,5 @@ angular.module('myApp.gallery', ['ngRoute'])
     $(".ui.dimmer").dimmer({
       on: "hover"
     })
-  })
+  });
 }]);

@@ -17,18 +17,18 @@
 <body >
 
   <div class="ui secondary pointing menu" ng-controller="mainCtrl">
-    <a class="active item">
+    <div navbar-button="gallery">
       Galeria
-    </a>
-    <a class="item">
+    </div>
+    <div navbar-button="examples">
       Ejemplos
-    </a>
-    <a class="item">
+    </div>
+    <div navbar-button="tutorials">
       Tutoriales
-    </a>
-    <a class="item">
+    </div>
+    <div navbar-button="social">
       Social
-    </a>
+    </div>
     <div class="right menu">
       <div class="item">
         <div class="ui icon input">
@@ -56,8 +56,11 @@
   <script type="text/javascript" src="angular-auth0.js"></script>
   <script src="libs/ace-builds-master/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="app.js"></script>
+  <script src="services/example-svc.js"></script>
+  <script src="directives/navbar-button.js"></script>
   <script src="gallery/gallery.js"></script>
   <script src="editor/editor.js"></script>
+  <script src="examples/examples.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

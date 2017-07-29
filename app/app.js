@@ -4,8 +4,11 @@
 angular.module('myApp', [
   'auth0.auth0',
   'ngRoute',
+  'myApp.navbar',
   'myApp.gallery',
   'myApp.editor',
+  'myApp.examples',
+  'myApp.exampleSvc',
   'myApp.version'
 ])
     
