@@ -9,12 +9,16 @@ angular.module('myApp.examples', ['ngRoute'])
   });
 }])
 
-.controller('ExamplesCtrl', [ "$scope", "authService", "exampleSvc", function($scope, authService, exampleSvc) {
-  $scope.examples = exampleSvc.all();
+.controller('ExamplesCtrl', [ "$scope", "$location", "authService", "exampleSvc",
+  function($scope, $location, authService, exampleSvc) {
+    $scope.examples = exampleSvc.all();
 
-  $(document).ready(function() {
-    $(".ui.dimmer").dimmer({
-      on: "hover"
-    })
-  });
-}]);
+    $scope.edit = ({ script }) =>  $location.path("/editor").search({ script });
+
+    $(document).ready(function() {
+      $(".ui.dimmer").dimmer({
+        on: "hover"
+      })
+    });
+  }
+]);

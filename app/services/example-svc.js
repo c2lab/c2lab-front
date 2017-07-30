@@ -3,7 +3,7 @@
 angular.module('myApp.exampleSvc', []).service("exampleSvc", function() {
   return {
     all: function() {
-      let script = "// Example script",
+      let script = "def render = {\n\t//Example script!\n}",
         title = "Example";
 
       return [

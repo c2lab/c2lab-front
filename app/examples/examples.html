@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="examples/examples.css">
+
 <div class="ui medium cards">
 
   <div class="ui card" ng-repeat="example in examples">
@@ -6,7 +8,7 @@
         <div class="content">
           <div class="center">
             <h2 class="ui inverted header">{{example.title}}</h2>
-            <i class="pencil icon"></i>
+            <i class="pencil icon edit-example-button" ng-click="edit(example)"></i>
           </div>
         </div>
       </div>
