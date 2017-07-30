@@ -6,6 +6,7 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.navbar',
   'myApp.gallery',
+  'myApp.sketchSvc',
   'myApp.editor',
   'myApp.examples',
   'myApp.exampleSvc',

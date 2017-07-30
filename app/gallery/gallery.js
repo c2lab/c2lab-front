@@ -9,8 +9,8 @@ angular.module('myApp.gallery', ['ngRoute'])
   });
 }])
 
-.controller('GalleryCtrl', [ "$scope", "authService", function($scope, authService) {
-  $scope.auth = authService
+.controller('GalleryCtrl', [ "$scope", "authService", "sketchSvc", function($scope, authService, sketchSvc) {
+  $scope.sketchs = sketchSvc.all({ user: authService.user });
 
   $(document).ready(function() {
     $(".ui.dimmer").dimmer({

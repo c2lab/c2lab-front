@@ -1,7 +1,6 @@
 <div class="ui medium cards">
 
-
-    <div class="ui card">
+    <div class="ui card" ng-repeat="sketch in sketchs track by $index">
         <div class="blurring dimmable image">
         <div class="ui dimmer transition hidden">
             <div class="content">
@@ -13,135 +12,7 @@
                 </div>
             </div>
         </div>
-        <img class="bordered ui image" src="assets/triangle.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle2.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle3.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle4.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle5.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle6.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle7.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle8.gif">
-        </div>
-    </div>
-
-    <div class="ui card">
-        <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted header">sketch</h2>
-                    <i class="empty heart icon"></i>
-                    <i class="empty star icon"></i>
-                    <i class="empty github alternate"></i>
-                </div>
-            </div>
-        </div>
-        <img class="bordered ui image" src="assets/triangle9.gif">
+        <img class="bordered ui image" ng-src={{sketch.path}}>
         </div>
     </div>
 
