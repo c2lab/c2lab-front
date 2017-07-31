@@ -1,13 +1,6 @@
 'use strict';
 
-angular.module('myApp.examples', ['ngRoute'])
-
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/examples', {
-    templateUrl: 'examples/examples.html',
-    controller: 'ExamplesCtrl'
-  });
-}])
+angular.module('myApp.examples', [])
 
 .controller('ExamplesCtrl', [ "$scope", "$location", "authService", "exampleSvc",
   function($scope, $location, authService, exampleSvc) {

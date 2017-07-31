@@ -16,7 +16,7 @@
 </head>
 <body >
 
-  <div class="ui secondary pointing menu" ng-controller="mainCtrl">
+  <div class="ui secondary pointing menu" ng-controller="mainCtrl" ng-show="isAuthenticated()">
     <navbar-button path="/gallery">
       Galeria
     </navbar-button>
@@ -39,9 +39,8 @@
           <i class="search link icon"></i>
         </div>
       </div>
-      <a class="ui item"
-         ng-click="auth.login()">
-        Login
+      <a class="ui item" ng-click="logout()">
+        Logout
       </a>
     </div>
   </div>

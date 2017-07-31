@@ -29,59 +29,93 @@ angular.module('myApp', [
     
   $locationProvider.hashPrefix('!');
 
-  $routeProvider.otherwise({redirectTo: '/gallery'});
+  function checkUserSession(authService, $location){
+    if (authService.isAuthenticated()) {
+      return true;
+    } else {
+      $location.path("/login")
+    }
+  }
+
+  $routeProvider
+    .when('/login', {
+      resolve: {
+        factory: function(angularAuth0, $q, $location, authService) {
+          let deferred = $q.defer();
+          if (authService.isAuthenticated()) {
+            $location.path('/gallery');
+            deferred.resolve(true);
+          } else {
+            angularAuth0.parseHash(function(err, authResult) {
+              if (authResult && authResult.idToken) {
+                let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+                localStorage.setItem('access_token', authResult.accessToken);
+                localStorage.setItem('id_token', authResult.idToken);
+                localStorage.setItem('expires_at', expiresAt);
+                $location.path('/gallery');
+              } else {
+                angularAuth0.authorize();
+              }
+              deferred.resolve(true);
+            });
+          }
+          return deferred.promise;
+        }
+      }
+    })
+    .when('/gallery', {
+      templateUrl: 'gallery/gallery.html',
+      controller: 'GalleryCtrl',
+      resolve: {
+        factory: checkUserSession
+      }
+    })
+    .when('/examples', {
+      templateUrl: 'examples/examples.html',
+      controller: 'ExamplesCtrl',
+      resolve: {
+        factory: checkUserSession
+      }
+    })
+    .when('/editor', {
+      templateUrl: 'editor/editor.html',
+      controller: 'EditorCtrl',
+      resolve: {
+        factory: checkUserSession
+      }
+    })
+    .otherwise({redirectTo: '/gallery'});
 }])
     
 .controller("mainCtrl", [ "$scope", "authService", function ($scope, authService) {
-  $scope.auth = authService
+  $scope.isAuthenticated = () => {
+    return authService.isAuthenticated()
+  };
+  $scope.logout = () => authService.logout();
 }])
     
-.service("authService", ["angularAuth0", function authService(angularAuth0) {
+.service("authService", ["angularAuth0", "$location", function authService(angularAuth0, $location) {
 
-  // function handleAuthentication() {
-  //   angularAuth0.parseHash(function(err, authResult) {
-  //     if (authResult && authResult.accessToken && authResult.idToken) {
-  //       setSession(authResult);
-  //       $state.go('home');
-  //     } else if (err) {
-  //       $timeout(function() {
-  //         $state.go('home');
-  //       });
-  //       console.log(err);
-  //     }
-  //   });
-  // }
-  //
-  // function setSession(authResult) {
-  //   // Set the time that the access token will expire at
-  //   let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-  //   localStorage.setItem('access_token', authResult.accessToken);
-  //   localStorage.setItem('id_token', authResult.idToken);
-  //   localStorage.setItem('expires_at', expiresAt);
-  // }
-  //
-  // function logout() {
-  //   // Remove tokens and expiry time from localStorage
-  //   localStorage.removeItem('access_token');
-  //   localStorage.removeItem('id_token');
-  //   localStorage.removeItem('expires_at');
-  // }
-  //
-  // function isAuthenticated() {
-  //   // Check whether the current time is past the
-  //   // access token's expiry time
-  //   let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-  //   return new Date().getTime() < expiresAt;
-  // }
+  function logout() {
+    removeSession();
+    angularAuth0.logout();
+  }
 
-  function login() {
-    angularAuth0.authorize();
+  function removeSession(){
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+  }
+
+  function isAuthenticated() {
+    // Check whether the current time is past the
+    // access token's expiry time
+    let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
   }
 
   return {
-    // handleAuthentication: handleAuthentication,
-    // isAuthenticated: isAuthenticated,
-    // logout: logout,
-    login: login
+    isAuthenticated,
+    logout
   }
 }])
