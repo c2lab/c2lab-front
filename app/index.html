@@ -42,6 +42,13 @@
       <a class="ui item" ng-click="logout()">
         Logout
       </a>
+      <paypal-button
+        env="paypal.env"
+        client="paypal.client"
+        payment="paypal.payment"
+        commit="paypal.commit"
+        on-authorize="paypal.onAuthorize">
+      </paypal-button>
     </div>
   </div>
 
@@ -67,5 +74,6 @@
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+  <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4></script>
 </body>
 </html>

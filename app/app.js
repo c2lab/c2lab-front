@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
   'auth0.auth0',
+  'paypal-button',
   'ngRoute',
   'myApp.navbar',
   'myApp.gallery',
@@ -92,6 +93,33 @@ angular.module('myApp', [
     return authService.isAuthenticated()
   };
   $scope.logout = () => authService.logout();
+
+  $scope.paypal = {
+    env: 'sandbox',
+    client: {
+        sandbox:    'AWi18rxt26-hrueMoPZ0tpGEOJnNT4QkiMQst9pYgaQNAfS1FLFxkxQuiaqRBj1vV5PmgHX_jA_c1ncL'
+    },
+    payment: function() {
+        var env    = this.props.env;
+        var client = this.props.client;
+        return paypal.rest.payment.create(env, client, {
+            transactions: [
+                {
+                    amount: { total: '1.00', currency: 'USD' }
+                }
+            ]
+        });
+    },
+    commit: true, // Optional: show a 'Pay Now' button in the checkout flow
+    onAuthorize: function(data, actions) {
+        // Optional: display a confirmation page here
+        console.log("confirm")
+        return actions.payment.execute().then(function() {
+            // Show a success page to the buyer
+            console.log("Success")
+        });
+    }
+  };
 }])
     
 .service("authService", ["angularAuth0", "$location", function authService(angularAuth0, $location) {
