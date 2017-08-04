@@ -1,19 +1,31 @@
+#contentContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex: 1;
+    height: 100%;
+}
+
+/**
+* EDITOR
+*/
+#editorContainer {
+    position: relative;
+    flex: 1;
+}
 
 #editor {
-    /*flex: 1;*/
-    margin: 0;
     position: absolute;
+    margin: 0;
     top: 0;
     bottom: 0;
-    right: 1%;
-    width: 85%;
+    right: 0;
+    left: 0;
 }
 
-#menu {
-    width: 13%;
-    bottom: 0%;
-}
-
+/**
+* MENU
+*/
 #menu > .button {
     border-top: 1px solid rgba(34,36,38,.15);
     padding: 1em 1em;
@@ -29,6 +41,20 @@
     background-color: rgba(34,36,38,.15);
 }
 
-#main {
-    flex: 1;
+#menu > .button > .icon {
+    margin-left: -1em;
+    color: black !important;
+}
+
+#menu {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 1.2em;
+    color: transparent;
+    transition: width 0.4s ease, color 0.1s ease 0.1s;
+}
+
+#menu:hover {
+    width: 13%;
+    color: inherit;
 }
