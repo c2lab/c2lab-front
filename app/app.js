@@ -24,7 +24,7 @@ angular.module('myApp', [
     domain: 'c2lab.auth0.com',
     responseType: 'token id_token',
     audience: 'https://c2lab.auth0.com/userinfo',
-    redirectUri: 'http://localhost:8000',
+    redirectUri: window.location.href,
     scope: 'openid'
   });
     
