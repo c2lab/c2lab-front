@@ -5,7 +5,7 @@ angular.module('myApp.editor', [])
 .controller('EditorCtrl', [ "$scope", "$routeParams", "$http", function($scope, $routeParams, $http) {
 
     $scope.getPreview = function () {
-        $http.post("http://localhost:3000/sketches/5959ac10c62d540f713bd55f/preview", {
+        $http.post(beURL + "/sketches/5959ac10c62d540f713bd55f/preview", {
                 code: editor.getValue()
             })
            .then(function (previewResponse) {
