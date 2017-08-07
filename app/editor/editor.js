@@ -2,7 +2,8 @@
 
 angular.module('myApp.editor', [])
 
-.controller('EditorCtrl', [ "$scope", "$routeParams", "$http", function($scope, $routeParams, $http) {
+.controller('EditorCtrl', [ "$scope", "$routeParams", "$http", "sketchSvc", 
+  function($scope, $routeParams, $http, sketchSvc) {
 
     $scope.getPreview = function () {
         $http.post(beURL + "/sketches/5959ac10c62d540f713bd55f/preview", {
@@ -17,6 +18,13 @@ angular.module('myApp.editor', [])
            });
     };
 
+    $scope.save = () => {
+      debugger
+      sketchSvc.create({ title: $scope.title, code: editor.getValue() }).then((sketch) => {
+        console.log(`${sketch.name} was successfully saved.`)
+      });
+    }
+
     var editor = ace.edit("editor");
 
     editor.setTheme("ace/theme/ambiance");
@@ -25,4 +33,5 @@ angular.module('myApp.editor', [])
     let defaultScript = "Setup._2D.LeftBottom.asCanvas\r\n  RectMode.leftBottom\r\n\r\n  def render():Unit = {\r\n    val pos = new Vector3(mouseX - (mouseX % 50), 0, 0)\r\n    \/\/Wold be great to reeplace materialize with implicit conversion\r\n    rect(pos,50,height, Palette.iDemandPancake.getRandom.toMeshBasicMaterial())\r\n   }";
 
     editor.setValue($routeParams.script || defaultScript);
+
 }])
