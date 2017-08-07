@@ -24,7 +24,7 @@ angular.module('myApp', [
     domain: 'c2lab.auth0.com',
     responseType: 'token id_token',
     audience: 'https://c2lab.auth0.com/userinfo',
-    redirectUri: 'http://localhost:8000',
+    redirectUri: window.location.href,
     scope: 'openid'
   });
     
@@ -97,7 +97,7 @@ angular.module('myApp', [
   $scope.paypal = {
     env: 'sandbox',
     client: {
-        sandbox:    'AWi18rxt26-hrueMoPZ0tpGEOJnNT4QkiMQst9pYgaQNAfS1FLFxkxQuiaqRBj1vV5PmgHX_jA_c1ncL'
+        sandbox:    'AVZkdF57wtyVstw9mz8R3dRsIZTlMoYwNGzxaJfWCK3YMU0Z230wDlBlHw4h6QvMvvs2xC5E5SYR0Evr'
     },
     payment: function() {
         var env    = this.props.env;
@@ -105,7 +105,7 @@ angular.module('myApp', [
         return paypal.rest.payment.create(env, client, {
             transactions: [
                 {
-                    amount: { total: '1.00', currency: 'USD' }
+                    amount: { total: '0.01', currency: 'USD' }
                 }
             ]
         });
