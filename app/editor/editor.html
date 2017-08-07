@@ -2,7 +2,7 @@
 
 <div id="contentContainer">
     <div id="menu">
-        <div class="button">
+        <div class="button" ng-click="getPreview()">
             <i class="video play outline icon"></i>
             <span>Preview</span>
         </div>
@@ -14,4 +14,5 @@
     <div id="editorContainer">
         <pre id="editor"></pre>
     </div>
+    <iframe id="previewIframe" style="display: none"></iframe>
 </div>
