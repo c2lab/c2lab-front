@@ -1,24 +1,19 @@
 'use strict';
 
-angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', function($q) {
+angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', function($q, $http) {
   return {
     all: function(options) {
       let { user } = options;
-      let sketchs = [
-        "assets/triangle.gif",
-        "assets/triangle2.gif",
-        "assets/triangle3.gif",
-        "assets/triangle4.gif",
-        "assets/triangle5.gif",
-        "assets/triangle6.gif",
-        "assets/triangle7.gif",
-        "assets/triangle8.gif",
-        "assets/triangle9.gif",
-      ].map((path) => ({ path }));
-
       let deferred  = $q.defer();
 
-      deferred.resolve(sketchs);
+      $http({
+        method: 'GET',
+        url: "http://localhost:3000/sketches"
+      }).then(({ sketches }) => {
+        deferred.resolve(sketches);
+      }, (e) => {
+        deferred.reject(e);
+      });
 
       return deferred.promise;
     }

@@ -17,7 +17,8 @@ angular.module('myApp', [
 .config([
   'angularAuth0Provider',
   '$locationProvider',
-  '$routeProvider', function($angularAuthProvider, $locationProvider, $routeProvider) {
+  '$routeProvider',
+  '$httpProvider', function($angularAuthProvider, $locationProvider, $routeProvider, $httpProvider) {
 
   $angularAuthProvider.init({
     clientID: 'VUs3zBHunPr1YqUooaqN0D1g9IaACyoH',
@@ -32,6 +33,7 @@ angular.module('myApp', [
 
   function checkUserSession(authService, $location){
     if (authService.isAuthenticated()) {
+      $httpProvider.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.id_token}` };
       return true;
     } else {
       $location.path("/login")
@@ -42,6 +44,11 @@ angular.module('myApp', [
     .when('/login', {
       resolve: {
         factory: function(angularAuth0, $q, $location, authService) {
+          function getFromUrl(param) {
+            let match = $location.url().match(new RegExp(`${param}=([^&]+)`));
+            return match && match[1];
+          }
+          
           let deferred = $q.defer();
           if (authService.isAuthenticated()) {
             $location.path('/gallery');
@@ -50,7 +57,7 @@ angular.module('myApp', [
             angularAuth0.parseHash(function(err, authResult) {
               if (authResult && authResult.idToken) {
                 let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-                localStorage.setItem('access_token', authResult.accessToken);
+                localStorage.setItem('access_token', authResult.accessToken || getFromUrl('access_token'));
                 localStorage.setItem('id_token', authResult.idToken);
                 localStorage.setItem('expires_at', expiresAt);
                 $location.path('/gallery');
@@ -86,6 +93,7 @@ angular.module('myApp', [
       }
     })
     .otherwise({redirectTo: '/gallery'});
+
 }])
     
 .controller("mainCtrl", [ "$scope", "authService", function ($scope, authService) {
