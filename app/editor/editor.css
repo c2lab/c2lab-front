@@ -58,3 +58,11 @@
     width: 13%;
     color: inherit;
 }
+
+/**
+* PREVIEW WINDOW
+*/
+#previewIframe {
+    border-radius: 0px;
+    border-width: 0px;
+}
