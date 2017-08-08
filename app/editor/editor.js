@@ -4,6 +4,7 @@ angular.module('myApp.editor', [])
 
 .controller('EditorCtrl', [ "$scope", "$routeParams", "$http", "sketchSvc", 
   function($scope, $routeParams, $http, sketchSvc) {
+    var modal;
 
     $scope.getPreview = function () {
         $http.post(beURL + "/sketches/preview", {
@@ -18,9 +19,15 @@ angular.module('myApp.editor', [])
            });
     };
 
+    $scope.openModal = () => {
+      modal.modal("show");
+    }
+
+    $scope.canSave = () => $scope.title;
+
     $scope.save = () => {
       sketchSvc.create({ title: $scope.title, code: editor.getValue() }).then((sketch) => {
-        console.log(`${sketch.name} was successfully saved.`)
+        console.log(`${sketch.title} was successfully saved.`)
       });
     }
 
@@ -32,5 +39,13 @@ angular.module('myApp.editor', [])
     let defaultScript = "Setup._2D.LeftBottom.asCanvas\r\n  RectMode.leftBottom\r\n\r\n  def render():Unit = {\r\n    val pos = new Vector3(mouseX - (mouseX % 50), 0, 0)\r\n    \/\/Wold be great to reeplace materialize with implicit conversion\r\n    rect(pos,50,height, Palette.iDemandPancake.getRandom.toMeshBasicMaterial())\r\n   }";
 
     editor.setValue($routeParams.script || defaultScript);
+
+    angular.element(document).ready(function () {
+      modal = $("#save-modal").modal('setting', {
+        onApprove: () => {
+          $scope.save();
+        }
+      });
+    });
 
 }])
