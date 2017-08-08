@@ -6,7 +6,7 @@ angular.module('myApp.editor', [])
   function($scope, $routeParams, $http, sketchSvc) {
 
     $scope.getPreview = function () {
-        $http.post(beURL + "/sketches/5959ac10c62d540f713bd55f/preview", {
+        $http.post(beURL + "/sketches/preview", {
                 code: editor.getValue()
             })
            .then(function (previewResponse) {
@@ -19,7 +19,6 @@ angular.module('myApp.editor', [])
     };
 
     $scope.save = () => {
-      debugger
       sketchSvc.create({ title: $scope.title, code: editor.getValue() }).then((sketch) => {
         console.log(`${sketch.name} was successfully saved.`)
       });
