@@ -130,7 +130,7 @@ angular.module('myApp', [
   };
 }])
     
-.service("authService", ["angularAuth0", "$location", function authService(angularAuth0, $location) {
+.service("authService", ["angularAuth0", "$location", "$q", "$http", function authService(angularAuth0, $location, $q, $http) {
 
   function logout() {
     removeSession();
@@ -150,8 +150,20 @@ angular.module('myApp', [
     return new Date().getTime() < expiresAt;
   }
 
+  function currentUser() {
+    let deferred = $q.defer();
+
+    $http({
+      method: 'GET',
+      url: `${beURL}/users/me`
+    }).then(({ data }) => deferred.resolve(data), (error) => deferred.reject(error));
+
+    return deferred.promise;
+  }
+
   return {
     isAuthenticated,
-    logout
+    logout,
+    currentUser
   }
 }])

@@ -11,9 +11,11 @@ angular.module('myApp.gallery', [])
     });
   }
 
-  sketchSvc.all({ user: authService.user }).then((sketchs) => {
-    $scope.sketchs = sketchs;
-    showActionsOnHover();
+  authService.currentUser().then((user) => {
+    sketchSvc.all({ user  }).then((sketchs) => {
+      $scope.sketchs = sketchs;
+      showActionsOnHover();
+    });
   });
 
 }]);

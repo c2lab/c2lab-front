@@ -2,12 +2,13 @@
 
 angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', function($q, $http) {
   return {
-    all: function() {
+    all: function({ user }) {
       let deferred  = $q.defer();
 
       $http({
         method: 'GET',
-        url: `${beURL}/sketches`
+        url: `${beURL}/sketches`,
+        params: { user_id: user.user_id }
       }).then(({ data }) => {
         deferred.resolve(data);
       }, (e) => {
