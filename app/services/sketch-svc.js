@@ -8,7 +8,7 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', funct
       $http({
         method: 'GET',
         url: `${beURL}/sketches`,
-        params: { user_id: user.user_id }
+        params: { owner: user.user_id }
       }).then(({ data }) => {
         deferred.resolve(data);
       }, (e) => {
