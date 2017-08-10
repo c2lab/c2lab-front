@@ -31,6 +31,36 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', funct
       });
 
       return deferred.promise;
+    },
+    find: function(id) {
+      let deferred  = $q.defer();
+
+      $http({
+        method: 'GET',
+        url: `${beURL}/sketches`,
+        params: { _id: id }
+      }).then(({ data }) => {
+        deferred.resolve(data[0]);
+      }, (e) => {
+        deferred.reject(e);
+      });
+
+      return deferred.promise;
+    },
+    update: function({ sketch_id, code, title }){
+      let deferred  = $q.defer();
+
+      $http({
+        method: 'PATCH',
+        url: `${beURL}/sketches/${sketch_id}`,
+        data: { code, title }
+      }).then(({ data }) => {
+        deferred.resolve(data);
+      }, (e) => {
+        deferred.reject(e);
+      });
+
+      return deferred.promise;
     }
   };
 }]);

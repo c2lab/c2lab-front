@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp.gallery', [])
+let gallery = angular.module('myApp.gallery', []);
 
-.controller('GalleryCtrl', [ "$scope", "authService", "sketchSvc", function($scope, authService, sketchSvc) {
+function GalleryCtrl($scope, authService, sketchSvc, $location) {
   function showActionsOnHover() {
     $(document).ready(function() {
       $(".ui.dimmer").dimmer({
@@ -16,6 +16,11 @@ angular.module('myApp.gallery', [])
       $scope.sketchs = sketchs;
       showActionsOnHover();
     });
+
+    $scope.canEdit = ({ owner }) => owner === user.user_id;
   });
 
-}]);
+  $scope.edit = ({ _id }) =>  $location.path("/editor").search({ sketch_id: _id });
+}
+
+gallery.controller('GalleryCtrl', [ "$scope", "authService", "sketchSvc", "$location", GalleryCtrl]);
