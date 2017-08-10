@@ -59,6 +59,10 @@
     color: inherit;
 }
 
+#titleInput {
+    margin-left: 2em;
+}
+
 /**
 * PREVIEW WINDOW
 */

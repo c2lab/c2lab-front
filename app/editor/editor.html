@@ -17,15 +17,15 @@
         <div class="header">Save Sketch</div>
         <div class="content">
             Title:
-            <span class="ui icon input">
-                <input type="text" placeholder="Title..." ng-model="title">
+            <span class="ui icon transparent input">
+                <input id="titleInput" type="text" placeholder="my awesome sketch" ng-model="title">
             </span>
             <div ng-if="showNoTitleMessage">
                 Please add a title
             </div>
         </div>
         <div class="actions">
-            <div class="ui approve button" ng-class="{ disabled: !canSave() }" ng-click="saveModal()">Approve</div>
+            <div class="ui approve button" ng-class="{ disabled: !canSave() }" ng-click="saveModal()">Save</div>
             <div class="ui cancel button">Cancel</div>
         </div>
     </div>
