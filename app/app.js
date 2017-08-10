@@ -26,7 +26,7 @@ angular.module('myApp', [
     domain: 'c2lab.auth0.com',
     responseType: 'token id_token',
     audience: 'https://c2lab.auth0.com/userinfo',
-    redirectUri: $windowProvider.$get().location.host,
+    redirectUri: $windowProvider.$get().location.origin,
     scope: 'openid'
   });
     
@@ -131,11 +131,11 @@ angular.module('myApp', [
   };
 }])
     
-.service("authService", ["angularAuth0", "$location", "$q", "$http", function authService(angularAuth0, $location, $q, $http) {
+.service("authService", ["angularAuth0", "$location", "$q", "$http", "$window", function authService(angularAuth0, $location, $q, $http, $window) {
 
   function logout() {
     removeSession();
-    angularAuth0.logout();
+    angularAuth0.logout({ returnTo: $window.location.origin });
   }
 
   function removeSession(){
