@@ -4,8 +4,6 @@ angular.module('myApp.editor', [])
 
 .controller('EditorCtrl', [ "$scope", "$routeParams", "$http", "sketchSvc", 
   function($scope, $routeParams, $http, sketchSvc) {
-    var modal;
-
     $scope.getPreview = function () {
         $http.post(beURL + "/sketches/preview", {
                 code: editor.getValue()
@@ -20,7 +18,7 @@ angular.module('myApp.editor', [])
     };
 
     $scope.openModal = () => {
-      modal.modal("show");
+      $scope.modal.modal("show");
     }
 
     $scope.canSave = () => $scope.title;
@@ -56,7 +54,7 @@ angular.module('myApp.editor', [])
     }
 
     angular.element(document).ready(function () {
-      modal = $("#save-modal").modal('setting', {
+      $scope.modal = $("#save-modal").modal('setting', {
         onApprove: () => {
           $scope.save();
         }

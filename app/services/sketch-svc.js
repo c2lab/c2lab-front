@@ -61,6 +61,21 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', funct
       });
 
       return deferred.promise;
+    },
+    delete: function(id) {
+      let deferred  = $q.defer();
+
+      $http({
+        method: 'DELETE',
+        url: `${beURL}/sketches`,
+        params: { _id: id }
+      }).then(({ data }) => {
+        deferred.resolve(data[0]);
+      }, (e) => {
+        deferred.reject(e);
+      });
+
+      return deferred.promise;
     }
   };
 }]);

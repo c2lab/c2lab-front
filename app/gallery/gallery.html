@@ -11,6 +11,7 @@
                     <i class="empty heart icon"></i>
                     <i class="empty star icon"></i>
                     <i class="empty github alternate"></i>
+                    <i class="remove icon delete-sketch-button" ng-if="canRemove(sketch)" ng-click="delete(sketch)"></i>
                 </div>
             </div>
         </div>
@@ -18,4 +19,14 @@
         </div>
     </div>
 
+</div>
+<div id="confirm-delete-modal" class="ui modal">
+    <div class="header">Delete Sketch</div>
+    <div class="content">
+        Are you sure?
+    </div>
+    <div class="actions">
+        <div class="ui approve button">Delete</div>
+        <div class="ui cancel button">Cancel</div>
+    </div>
 </div>
