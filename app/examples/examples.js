@@ -9,7 +9,7 @@ angular.module('myApp.examples', [])
     $scope.edit = ({ script }) =>  $location.path("/editor").search({ script });
 
     $(document).ready(function() {
-      $(".ui.dimmer").dimmer({
+      $(".sketch-box").dimmer({
         on: "hover"
       })
     });

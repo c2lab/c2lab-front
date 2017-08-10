@@ -5,7 +5,7 @@ let gallery = angular.module('myApp.gallery', []);
 function GalleryCtrl($scope, authService, sketchSvc, $location) {
   function showActionsOnHover() {
     $(document).ready(function() {
-      $(".ui.dimmer").dimmer({
+      $(".sketch-box").dimmer({
         on: "hover"
       })
     });
