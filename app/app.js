@@ -18,14 +18,15 @@ angular.module('myApp', [
   'angularAuth0Provider',
   '$locationProvider',
   '$routeProvider',
-  '$httpProvider', function($angularAuthProvider, $locationProvider, $routeProvider, $httpProvider) {
+  '$httpProvider',
+  '$windowProvider', function($angularAuthProvider, $locationProvider, $routeProvider, $httpProvider, $windowProvider) {
 
   $angularAuthProvider.init({
     clientID: 'VUs3zBHunPr1YqUooaqN0D1g9IaACyoH',
     domain: 'c2lab.auth0.com',
     responseType: 'token id_token',
     audience: 'https://c2lab.auth0.com/userinfo',
-    redirectUri: window.location.href,
+    redirectUri: $windowProvider.$get().location.host,
     scope: 'openid'
   });
     
