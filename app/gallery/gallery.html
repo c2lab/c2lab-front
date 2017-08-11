@@ -1,14 +1,14 @@
 <link rel="stylesheet" href="gallery/gallery.css">
 <div class="ui medium cards">
 
-    <div class="ui card" ng-repeat="sketch in sketchs track by $index">
+    <div class="ui card" ng-repeat="sketch in sketches track by $index">
         <div class="blurring dimmable image">
         <div class="ui dimmer transition hidden sketch-box">
             <div class="content">
                 <div class="center">
                     <h2 class="ui inverted header">{{sketch.title}}</h2>
                     <i class="pencil icon edit-sketch-button" ng-if="canEdit(sketch)" ng-click="edit(sketch)"></i>
-                    <i class="empty heart icon"></i>
+                    <i class="heart icon" ng-class="{ empty: !sketch.isLiked }" ng-click="switchLike(sketch)"></i>
                     <i class="empty star icon"></i>
                     <i class="empty github alternate"></i>
                     <i class="remove icon delete-sketch-button" ng-if="canRemove(sketch)" ng-click="delete(sketch)"></i>

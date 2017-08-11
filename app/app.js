@@ -11,7 +11,8 @@ angular.module('myApp', [
   'myApp.editor',
   'myApp.examples',
   'myApp.exampleSvc',
-  'myApp.version'
+  'myApp.version',
+  'myApp.likeSvc'
 ])
     
 .config([

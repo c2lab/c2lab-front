@@ -1,31 +1,46 @@
 'use strict';
 
-angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', function($q, $http) {
+angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', function($q, $http) {
   return {
-    like: function({ user }) {
+    like: function({ user, sketch }) {
       let deferred  = $q.defer();
 
       $http({
         method: 'POST',
-        url: `${beURL}/sketches`,
-        params: { owner: user.user_id }
+        url: `${beURL}/likes`,
+        data: { sketch_id: sketch._id, liker_id: user.user_id }
       }).then(({ data }) => {
-        deferred.resolve(data);
+        deferred.resolve(data[0]);
       }, (e) => {
         deferred.reject(e);
       });
 
       return deferred.promise;
     },
-    dislike: function(sketch) {
+    dislike: function({ user, sketch }) {
       let deferred  = $q.defer();
 
       $http({
-        method: 'POST',
-        url: `${beURL}/sketches`,
-        data: sketch
+        method: 'DELETE',
+        url: `${beURL}/likes`,
+        data: { liker_id: user.user_id, sketch_id: sketch._id }
       }).then(({ data }) => {
-        deferred.resolve(data);
+        deferred.resolve(data[0]);
+      }, (e) => {
+        deferred.reject(e);
+      });
+
+      return deferred.promise;
+    },
+    find: function({ user, sketch }) {
+      let deferred  = $q.defer();
+
+      $http({
+        method: 'GET',
+        url: `${beURL}/likes`,
+        params: { liker_id: user.user_id, sketch_id: sketch._id }
+      }).then(({ data }) => {
+        deferred.resolve(data[0]);
       }, (e) => {
         deferred.reject(e);
       });

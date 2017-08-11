@@ -2,7 +2,24 @@
 
 let gallery = angular.module('myApp.gallery', []);
 
-function GalleryCtrl($scope, authService, sketchSvc, $location) {
+function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
+  let currentUser;
+  let getCurrentUser = () => {
+    let deferred = $q.defer();
+
+    if (currentUser) {
+      deferred.resolve(currentUser);
+    } else {
+      authService.currentUser().then((user) => {
+        currentUser = user;
+        deferred.resolve(user);
+      });
+    }
+
+    return deferred.promise;
+  }
+
+
   function showActionsOnHover() {
     $(document).ready(function() {
       $(".sketch-box").dimmer({
@@ -11,10 +28,22 @@ function GalleryCtrl($scope, authService, sketchSvc, $location) {
     });
   }
 
+  let updateLikeStatus = () => {
+    getCurrentUser().then((user) => {
+      $scope.sketches.forEach((sketch) => {
+        likeSvc.find({ sketch, user }).then((like) => {
+          sketch.isLiked = !!like;
+          console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
+        });
+      });
+    });
+  }
+
   let loadSketches = () => {
-    authService.currentUser().then((user) => {
-      sketchSvc.all({ user  }).then((sketchs) => {
-        $scope.sketchs = sketchs;
+    getCurrentUser().then((user) => {
+      sketchSvc.all({ user  }).then((sketches) => {
+        $scope.sketches = sketches;
+        updateLikeStatus();
         showActionsOnHover();
       });
 
@@ -39,9 +68,23 @@ function GalleryCtrl($scope, authService, sketchSvc, $location) {
     }).modal("show");
   }
 
+  $scope.switchLike = (sketch) => {
+    getCurrentUser().then((user) => {
+      if (sketch.isLiked) {
+        likeSvc.dislike({ user, sketch }).then((response) => {
+          updateLikeStatus();
+        });
+      } else {
+        likeSvc.like({ user, sketch }).then((response) => {
+          updateLikeStatus();
+        });
+      }
+    });
+  }
+
   angular.element(document).ready(function () {
     $scope.confirmDeleteModal = $("#confirm-delete-modal");
   });
 }
 
-gallery.controller('GalleryCtrl', [ "$scope", "authService", "sketchSvc", "$location", GalleryCtrl]);
+gallery.controller('GalleryCtrl', [ "$scope", "authService", "sketchSvc", "$location", "$q", "likeSvc", GalleryCtrl]);
