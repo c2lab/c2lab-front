@@ -40,7 +40,7 @@ angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', function(
         url: `${beURL}/likes`,
         params: { liker_id: user.user_id, sketch_id: sketch._id }
       }).then(({ data }) => {
-        deferred.resolve(data[0]);
+        deferred.resolve(data.data[0]);
       }, (e) => {
         deferred.reject(e);
       });

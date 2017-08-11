@@ -10,7 +10,7 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', funct
         url: `${beURL}/sketches`,
         params: { owner: user.user_id }
       }).then(({ data }) => {
-        deferred.resolve(data);
+        deferred.resolve(data.data);
       }, (e) => {
         deferred.reject(e);
       });
@@ -40,7 +40,7 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', funct
         url: `${beURL}/sketches`,
         params: { _id: id }
       }).then(({ data }) => {
-        deferred.resolve(data[0]);
+        deferred.resolve(data.data[0]);
       }, (e) => {
         deferred.reject(e);
       });
