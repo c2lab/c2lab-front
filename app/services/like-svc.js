@@ -53,7 +53,7 @@ angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', function(
       $http({
         method: 'GET',
         url: `${beURL}/likes`,
-        params: { sketch_id: sketch._id }
+        params: { sketch_id: sketch._id, $limit: 0 }
       }).then(({ data }) => {
         deferred.resolve(data.total);
       }, (e) => {
