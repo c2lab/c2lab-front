@@ -19,6 +19,9 @@
         <img class="bordered ui image" ng-src="{{ sketch.path || 'assets/no-preview.png' }}">
         </div>
     </div>
+    <strong class="no-sketches-message" ng-if="!sketches.length">
+        Todavía no tenés sketches. Empezá por <a href="/#!editor">editar uno</a>!
+    </strong>
 
 </div>
 <div id="confirm-delete-modal" class="ui modal">
