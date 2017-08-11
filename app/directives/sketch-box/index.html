@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="directives/sketch-box/index.css">
+<div class="ui card" ng-init="showActionsOnHover()">
+    <div class="blurring dimmable image">
+    <div class="ui dimmer transition hidden sketch-box">
+        <div class="content">
+            <div class="center">
+                <h2 class="ui inverted header">{{sketch.title}}</h2>
+                <ng-transclude></ng-transclude>
+            </div>
+        </div>
+    </div>
+    <img class="bordered ui image" ng-src="{{ sketch.path || 'assets/no-preview.png' }}">
+    </div>
+</div>
