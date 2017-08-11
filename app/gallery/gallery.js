@@ -34,6 +34,10 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
         likeSvc.find({ sketch, user }).then((like) => {
           sketch.isLiked = !!like;
           console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
+          likeSvc.sketchTotal({ sketch }).then((total) => {
+            sketch.totalLikes = total;
+            console.log(`${sketch.title} has ${sketch.totalLikes} likes.`);
+          });
         });
       });
     });

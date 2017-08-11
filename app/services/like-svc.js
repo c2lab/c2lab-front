@@ -46,6 +46,21 @@ angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', function(
       });
 
       return deferred.promise;
+    },
+    sketchTotal: function({ sketch }) {
+      let deferred  = $q.defer();
+
+      $http({
+        method: 'GET',
+        url: `${beURL}/likes`,
+        params: { sketch_id: sketch._id }
+      }).then(({ data }) => {
+        deferred.resolve(data.total);
+      }, (e) => {
+        deferred.reject(e);
+      });
+
+      return deferred.promise;
     }
   };
 }]);
