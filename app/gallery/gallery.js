@@ -15,11 +15,9 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     return likeSvc.myLikesFor({ sketches: $scope.sketches }).then((likes) => {
       $scope.sketches.forEach((sketch) => {
         let like = likes.find(({ sketch_id }) => sketch_id === sketch._id);
-        sketch.isLiked = !!like;
-        console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
         likeSvc.sketchTotal({ sketch }).then((total) => {
+          sketch.isLiked = !!like;
           sketch.totalLikes = total;
-          console.log(`${sketch.title} has ${sketch.totalLikes} likes.`);
         });
       });
     });
@@ -29,9 +27,7 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     return likeSvc.myLikeFor({ sketch }).then((like) => {
         likeSvc.sketchTotal({ sketch }).then((total) => {
           sketch.isLiked = !!like;
-          console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
           sketch.totalLikes = total;
-          console.log(`${sketch.title} has ${sketch.totalLikes} likes.`);
         });
     });
   }
