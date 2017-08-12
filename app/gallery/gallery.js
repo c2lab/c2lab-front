@@ -12,7 +12,7 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
   }
 
   let updateLikeStatus = () => {
-    likeSvc.myLikesFor({ sketches: $scope.sketches }).then((likes) => {
+    return likeSvc.myLikesFor({ sketches: $scope.sketches }).then((likes) => {
       $scope.sketches.forEach((sketch) => {
         let like = likes.find(({ sketch_id }) => sketch_id === sketch._id);
         sketch.isLiked = !!like;
@@ -26,7 +26,7 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
   }
 
   let updateLikeStatusFor = (sketch) => {
-    likeSvc.myLikeFor({ sketch }).then((like) => {
+    return likeSvc.myLikeFor({ sketch }).then((like) => {
         sketch.isLiked = !!like;
         console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
         likeSvc.sketchTotal({ sketch }).then((total) => {
@@ -40,8 +40,9 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     authService.currentUser().then((user) => {
       sketchSvc.all({ user  }).then((sketches) => {
         $scope.sketches = sketches;
-        updateLikeStatus();
-        showActionsOnHover();
+        updateLikeStatus().then((sketch) => {
+          showActionsOnHover();
+        });
       });
 
       let isOwner = ({ owner }) => owner === user.user_id;
@@ -68,13 +69,13 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
   $scope.switchLike = (sketch) => {
     if (sketch.isLiked) {
       sketch.isLiked = false;
-      sketch.totalLikes = (sketch.totalLikes || 1) - 1;
+      sketch.totalLikes = sketch.totalLikes - 1;
       likeSvc.dislike({ sketch }).then((response) => {
         updateLikeStatusFor(sketch);
       });
     } else {
       sketch.isLiked = true;
-      sketch.totalLikes = (sketch.totalLikes || 0) + 1;
+      sketch.totalLikes = sketch.totalLikes + 1;
       likeSvc.like({ sketch }).then((response) => {
         updateLikeStatusFor(sketch);
       });
