@@ -82,6 +82,9 @@ angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', 'authServ
       });
 
       return deferred.promise;
+    },
+    myLikeFor: function({ sketch }) {
+      return this.myLikesFor({ sketches: [sketch] }).then((likes) => likes[0]);
     }
   };
 }]);

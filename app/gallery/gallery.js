@@ -25,6 +25,17 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     });
   }
 
+  let updateLikeStatusFor = (sketch) => {
+    likeSvc.myLikeFor({ sketch }).then((like) => {
+        sketch.isLiked = !!like;
+        console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
+        likeSvc.sketchTotal({ sketch }).then((total) => {
+          sketch.totalLikes = total;
+          console.log(`${sketch.title} has ${sketch.totalLikes} likes.`);
+        });
+    });
+  }
+
   let loadSketches = () => {
     authService.currentUser().then((user) => {
       sketchSvc.all({ user  }).then((sketches) => {
@@ -59,13 +70,13 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
       sketch.isLiked = false;
       sketch.totalLikes = (sketch.totalLikes || 1) - 1;
       likeSvc.dislike({ sketch }).then((response) => {
-        updateLikeStatus();
+        updateLikeStatusFor(sketch);
       });
     } else {
       sketch.isLiked = true;
       sketch.totalLikes = (sketch.totalLikes || 0) + 1;
       likeSvc.like({ sketch }).then((response) => {
-        updateLikeStatus();
+        updateLikeStatusFor(sketch);
       });
     }
   }
