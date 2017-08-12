@@ -27,9 +27,9 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
 
   let updateLikeStatusFor = (sketch) => {
     return likeSvc.myLikeFor({ sketch }).then((like) => {
-        sketch.isLiked = !!like;
-        console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
         likeSvc.sketchTotal({ sketch }).then((total) => {
+          sketch.isLiked = !!like;
+          console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
           sketch.totalLikes = total;
           console.log(`${sketch.title} has ${sketch.totalLikes} likes.`);
         });
