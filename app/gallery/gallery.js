@@ -3,23 +3,6 @@
 let gallery = angular.module('myApp.gallery', []);
 
 function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
-  let currentUser;
-  let getCurrentUser = () => {
-    let deferred = $q.defer();
-
-    if (currentUser) {
-      deferred.resolve(currentUser);
-    } else {
-      authService.currentUser().then((user) => {
-        currentUser = user;
-        deferred.resolve(user);
-      });
-    }
-
-    return deferred.promise;
-  }
-
-
   function showActionsOnHover() {
     $(document).ready(function() {
       $(".sketch-box").dimmer({
@@ -29,22 +12,21 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
   }
 
   let updateLikeStatus = () => {
-    getCurrentUser().then((user) => {
+    likeSvc.myLikesFor({ sketches: $scope.sketches }).then((likes) => {
       $scope.sketches.forEach((sketch) => {
-        likeSvc.find({ sketch, user }).then((like) => {
-          sketch.isLiked = !!like;
-          console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
-          likeSvc.sketchTotal({ sketch }).then((total) => {
-            sketch.totalLikes = total;
-            console.log(`${sketch.title} has ${sketch.totalLikes} likes.`);
-          });
+        let like = likes.find(({ sketch_id }) => sketch_id === sketch._id);
+        sketch.isLiked = !!like;
+        console.log(`${sketch.title} is liked: ${sketch.isLiked}`);
+        likeSvc.sketchTotal({ sketch }).then((total) => {
+          sketch.totalLikes = total;
+          console.log(`${sketch.title} has ${sketch.totalLikes} likes.`);
         });
       });
     });
   }
 
   let loadSketches = () => {
-    getCurrentUser().then((user) => {
+    authService.currentUser().then((user) => {
       sketchSvc.all({ user  }).then((sketches) => {
         $scope.sketches = sketches;
         updateLikeStatus();
@@ -73,17 +55,19 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
   }
 
   $scope.switchLike = (sketch) => {
-    getCurrentUser().then((user) => {
-      if (sketch.isLiked) {
-        likeSvc.dislike({ user, sketch }).then((response) => {
-          updateLikeStatus();
-        });
-      } else {
-        likeSvc.like({ user, sketch }).then((response) => {
-          updateLikeStatus();
-        });
-      }
-    });
+    if (sketch.isLiked) {
+      sketch.isLiked = false;
+      sketch.totalLikes = (sketch.totalLikes || 1) - 1;
+      likeSvc.dislike({ sketch }).then((response) => {
+        updateLikeStatus();
+      });
+    } else {
+      sketch.isLiked = true;
+      sketch.totalLikes = (sketch.totalLikes || 0) + 1;
+      likeSvc.like({ sketch }).then((response) => {
+        updateLikeStatus();
+      });
+    }
   }
 
   angular.element(document).ready(function () {

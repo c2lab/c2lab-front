@@ -152,13 +152,21 @@ angular.module('myApp', [
     return new Date().getTime() < expiresAt;
   }
 
+  let user;
   function currentUser() {
     let deferred = $q.defer();
 
-    $http({
-      method: 'GET',
-      url: `${beURL}/users/me`
-    }).then(({ data }) => deferred.resolve(data), (error) => deferred.reject(error));
+    if (user) {
+      deferred.resolve(user);
+    } else {
+      $http({
+        method: 'GET',
+        url: `${beURL}/users/me`
+      }).then(({ data }) => {
+        user = data;
+        deferred.resolve(data);
+      }, (error) => deferred.reject(error));
+    }
 
     return deferred.promise;
   }

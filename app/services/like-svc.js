@@ -1,33 +1,37 @@
 'use strict';
 
-angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', function($q, $http) {
+angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', 'authService', function($q, $http, authService) {
   return {
-    like: function({ user, sketch }) {
+    like: function({ sketch }) {
       let deferred  = $q.defer();
 
-      $http({
-        method: 'POST',
-        url: `${beURL}/likes`,
-        data: { sketch_id: sketch._id, liker_id: user.user_id }
-      }).then(({ data }) => {
-        deferred.resolve(data[0]);
-      }, (e) => {
-        deferred.reject(e);
+      authService.currentUser().then((user) => {
+        $http({
+          method: 'POST',
+          url: `${beURL}/likes`,
+          data: { sketch_id: sketch._id, liker_id: user.user_id }
+        }).then(({ data }) => {
+          deferred.resolve(data[0]);
+        }, (e) => {
+          deferred.reject(e);
+        });
       });
 
       return deferred.promise;
     },
-    dislike: function({ user, sketch }) {
+    dislike: function({ sketch }) {
       let deferred  = $q.defer();
 
-      $http({
-        method: 'DELETE',
-        url: `${beURL}/likes`,
-        data: { liker_id: user.user_id, sketch_id: sketch._id }
-      }).then(({ data }) => {
-        deferred.resolve(data[0]);
-      }, (e) => {
-        deferred.reject(e);
+      authService.currentUser().then((user) => {
+        $http({
+          method: 'DELETE',
+          url: `${beURL}/likes`,
+          data: { liker_id: user.user_id, sketch_id: sketch._id }
+        }).then(({ data }) => {
+          deferred.resolve(data[0]);
+        }, (e) => {
+          deferred.reject(e);
+        });
       });
 
       return deferred.promise;
@@ -58,6 +62,23 @@ angular.module('myApp.likeSvc', []).service("likeSvc", ['$q', '$http', function(
         deferred.resolve(data.total);
       }, (e) => {
         deferred.reject(e);
+      });
+
+      return deferred.promise;
+    },
+    myLikesFor: function({ sketches }) {
+      let deferred  = $q.defer();
+
+      authService.currentUser().then((user) => {
+        $http({
+          method: 'GET',
+          url: `${beURL}/likes`,
+          params: { liker_id: user.user_id, sketch_id: sketches.map(({ _id }) => _id) }
+        }).then(({ data }) => {
+          deferred.resolve(data.data);
+        }, (e) => {
+          deferred.reject(e);
+        });
       });
 
       return deferred.promise;
