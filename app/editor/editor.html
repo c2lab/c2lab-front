@@ -16,12 +16,29 @@
     <div id="save-modal" class="ui modal">
         <div class="header">Save Sketch</div>
         <div class="content">
-            Title:
-            <span class="ui icon transparent input">
-                <input id="titleInput" type="text" placeholder="my awesome sketch" ng-model="title">
-            </span>
-            <div ng-if="showNoTitleMessage">
-                Please add a title
+            <div class="ui segments">
+                <div class="ui segment">
+                Title:
+                <span class="ui icon transparent input">
+                    <input id="titleInput" type="text" placeholder="my awesome sketch" ng-model="title" required>
+                </span>
+                <div ng-if="showNoTitleMessage">
+                    Please add a title
+                </div>
+                </div>
+                <div class="ui secondary segment">
+                    <div class="ui right labeled left icon input">
+                        <i class="tags icon"></i>
+                        <input type="text" placeholder="Enter tags" ng-model="tag">
+                        <a class="ui tag label" ng-click="addTag()">
+                            Add Tag
+                        </a>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div ng-repeat="tag in tags track by $index">
+                        <a class="ui tag label" ng-click="removeTag($index)">{{tag}}<i class="delete icon"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="actions">

@@ -47,13 +47,13 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', funct
 
       return deferred.promise;
     },
-    update: function({ sketch_id, code, title }){
+    update: function({ sketch_id, code, title, tags }){
       let deferred  = $q.defer();
 
       $http({
         method: 'PATCH',
         url: `${beURL}/sketches/${sketch_id}`,
-        data: { code, title }
+        data: { code, title, tags }
       }).then(({ data }) => {
         deferred.resolve(data);
       }, (e) => {

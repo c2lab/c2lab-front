@@ -18,6 +18,7 @@ angular.module('myApp.editor', [])
     };
 
     $scope.openModal = () => {
+			if (currentSketch) loadSketch();
       $scope.modal.modal("show");
     }
 
@@ -25,27 +26,47 @@ angular.module('myApp.editor', [])
 
     $scope.save = () => {
       if ($scope.sketch_id) {
-        sketchSvc.update({ title: $scope.title, code: editor.getValue(), sketch_id: $scope.sketch_id }).then((sketch) => {
+        sketchSvc.update({ title: $scope.title, code: editor.getValue(), sketch_id: $scope.sketch_id, tags: $scope.tags }).then((sketch) => {
           console.log(`${sketch.title} was successfully updated.`)
         });
       } else {
-        sketchSvc.create({ title: $scope.title, code: editor.getValue() }).then((sketch) => {
+        sketchSvc.create({ title: $scope.title, code: editor.getValue(), tags: $scope.tags}).then((sketch) => {
           console.log(`${sketch.title} was successfully created.`)
         });
       }
     }
+
+    $scope.currentTags = [];
+
+    $scope.removeTag = (index) => {
+    	//TODO: Tags should be a set
+		  $scope.tags = $scope.tags.filter((_, i) => i !== index);
+	  }
+
+	  $scope.addTag = () => {
+		  $scope.tags = $scope.tags.slice();
+		  $scope.tags.push($scope.tag);
+	  };
 
     var editor = ace.edit("editor");
 
     editor.setTheme("ace/theme/ambiance");
     editor.session.setMode("ace/mode/scala");
 
+    var currentSketch;
+
+    const loadSketch =  () => {
+	    currentSketch.then(({ title, code, tags }) => {
+		    $scope.sketch_id = $routeParams.sketch_id;
+		    $scope.title = title;
+		    $scope.tags = tags;
+		    editor.setValue(code);
+	    });
+    }
+
     if ($routeParams.sketch_id) {
-      sketchSvc.find($routeParams.sketch_id).then(({ title, code }) => {
-        $scope.sketch_id = $routeParams.sketch_id;
-        $scope.title = title;
-        editor.setValue(code);
-      });
+	    currentSketch = sketchSvc.find($routeParams.sketch_id);
+	    loadSketch();
     } else if ($routeParams.script) {
       editor.setValue($routeParams.script || defaultScript);
     } else {
