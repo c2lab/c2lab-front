@@ -6,16 +6,16 @@ angular.module('myApp.editor', [])
     function ($scope, $routeParams, $http, sketchSvc) {
       $scope.getPreview = function () {
         $("#previewPanel").addClass("open");
+        $("#previewIframe").removeAttr("src");
 
         $http.post(beURL + "/sketches/preview", {
             code: editor.getValue()
           })
           .then(function (previewResponse) {
             $("#previewIframe")
-              .show()
               .attr("src",
-                "data:text/html;charset=utf-8," + encodeURIComponent(previewResponse.data.code
-                ));
+                "data:text/html;charset=utf-8," + encodeURIComponent(previewResponse.data.code)
+              );
           });
       };
 
