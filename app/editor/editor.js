@@ -2,27 +2,29 @@
 
 angular.module('myApp.editor', [])
 
-.controller('EditorCtrl', [ "$scope", "$routeParams", "$http", "sketchSvc", 
-  function($scope, $routeParams, $http, sketchSvc) {
-    $scope.getPreview = function () {
+  .controller('EditorCtrl', ["$scope", "$routeParams", "$http", "sketchSvc",
+    function ($scope, $routeParams, $http, sketchSvc) {
+      $scope.getPreview = function () {
+        $("#previewPanel").addClass("open");
+        $("#previewIframe").removeAttr("src");
+
         $http.post(beURL + "/sketches/preview", {
-                code: editor.getValue()
-            })
-           .then(function (previewResponse) {
-               $("#previewIframe")
-                   .show()
-                   .attr("src",
-                       "data:text/html;charset=utf-8," + encodeURIComponent(previewResponse.data.code
-                   ));
-           });
-    };
+            code: editor.getValue()
+          })
+          .then(function (previewResponse) {
+            $("#previewIframe")
+              .attr("src",
+                "data:text/html;charset=utf-8," + encodeURIComponent(previewResponse.data.code)
+              );
+          });
+      };
 
     $scope.openModal = () => {
 			if (currentSketch) loadSketch();
       $scope.modal.modal("show");
     }
 
-    $scope.canSave = () => $scope.title;
+      $scope.canSave = () => $scope.title;
 
     $scope.save = () => {
       if ($scope.sketch_id) {
@@ -50,8 +52,8 @@ angular.module('myApp.editor', [])
 
     var editor = ace.edit("editor");
 
-    editor.setTheme("ace/theme/ambiance");
-    editor.session.setMode("ace/mode/scala");
+      editor.setTheme("ace/theme/ambiance");
+      editor.session.setMode("ace/mode/scala");
 
     var currentSketch;
 
@@ -74,12 +76,12 @@ angular.module('myApp.editor', [])
       editor.setValue(defaultScript);
     }
 
-    angular.element(document).ready(function () {
-      $scope.modal = $("#save-modal").modal('setting', {
-        onApprove: () => {
-          $scope.save();
-        }
+      angular.element(document).ready(function () {
+        $scope.modal = $("#save-modal").modal('setting', {
+          onApprove: () => {
+            $scope.save();
+          }
+        });
       });
-    });
 
-}])
+    }])

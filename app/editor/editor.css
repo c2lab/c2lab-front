@@ -64,9 +64,37 @@
 }
 
 /**
-* PREVIEW WINDOW
+* PREVIEW PANEL
 */
+
+#previewLoader > .loader {
+    z-index: 0;
+}
+
+#previewLoader {
+    border-radius: 0px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#previewPanel {
+    position: relative;
+    width: 0%;
+    transition: width 1s ease;
+}
+
+#previewPanel.open {
+    width: 40%;
+}
+
 #previewIframe {
+    z-index: 1;
+    position: absolute;
+    height:100%;
+    width:100%;
     border-radius: 0px;
     border-width: 0px;
 }
