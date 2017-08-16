@@ -72,7 +72,7 @@ angular.module('myApp.editor', [])
     } else if ($routeParams.script) {
       editor.setValue($routeParams.script || defaultScript);
     } else {
-      let defaultScript = "Setup._2D.LeftBottom.asCanvas\r\n  RectMode.leftBottom\r\n\r\n  def render():Unit = {\r\n    val pos = new Vector3(mouseX - (mouseX % 50), 0, 0)\r\n    \/\/Wold be great to reeplace materialize with implicit conversion\r\n    rect(pos,50,height, Palette.iDemandPancake.getRandom.toMeshBasicMaterial())\r\n   }";
+      let defaultScript = "Setup._2D.LeftBottom.asCanvas\r\n  \r\n  def render():Unit = {\r\n \r\n   }";
       editor.setValue(defaultScript);
     }
 
