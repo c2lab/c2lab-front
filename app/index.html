@@ -17,7 +17,10 @@
 </head>
 <body >
 
-  <div class="ui secondary pointing menu" ng-controller="mainCtrl" ng-show="isAuthenticated()">
+  <div class="ui top attached menu" ng-controller="mainCtrl" ng-show="isAuthenticated()">
+    <div class="header item">
+     C2LAB
+    </div>
     <navbar-button ng-cloak path="/gallery">
       Galeria
     </navbar-button>
@@ -34,12 +37,6 @@
       Social
     </navbar-button>
     <div class="right menu">
-      <div class="item">
-        <div class="ui icon input">
-          <input type="text" placeholder="Search...">
-          <i class="search link icon"></i>
-        </div>
-      </div>
       <a class="ui item" ng-click="logout()">
         Logout
       </a>
@@ -53,7 +50,7 @@
     </div>
   </div>
 
-  <div id="main" class="ui basic segment" ng-view></div>
+  <div id="main" class="ui attached segment" ng-view></div>
 
   <div id="footer">made with ❤ by c2lab team</div>
 

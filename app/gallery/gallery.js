@@ -7,7 +7,7 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     $(document).ready(function() {
       $(".sketch-box").dimmer({
         on: "hover"
-      })
+      });
     });
   }
 
@@ -46,6 +46,14 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
       $scope.canRemove = isOwner;
     });
   }
+
+  const init = () => {
+	  $(document).ready(() => {
+		  $('.ui.dropdown').dropdown();
+	  });
+  };
+
+  init();
 
   loadSketches();
 
