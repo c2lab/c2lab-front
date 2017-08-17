@@ -1,21 +1,12 @@
 'use strict';
 
-angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', function($q, $http) {
+angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', '$feathers', function($q, $http, $feathers) {
   return {
-    all: function({ user }) {
-      let deferred  = $q.defer();
-
-      $http({
-        method: 'GET',
-        url: `${beURL}/sketches`,
-        params: { owner: user.user_id }
-      }).then(({ data }) => {
-        deferred.resolve(data.data);
-      }, (e) => {
-        deferred.reject(e);
-      });
-
-      return deferred.promise;
+    all: function({ user, date }) {
+	    var sketchService = $feathers.service('sketches')
+	    const query = {owner: user.user_id};
+	    if (date) query.updated_at = { $gte: date };
+	    return sketchService.find({ query }).then((x) => x.data);
     },
     create: function(sketch) {
       let deferred  = $q.defer();

@@ -32,9 +32,9 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     });
   }
 
-  let loadSketches = () => {
+  let loadSketches = (date) => {
     authService.currentUser().then((user) => {
-      sketchSvc.all({ user  }).then((sketches) => {
+      sketchSvc.all({ user , date }).then((sketches) => {
         $scope.sketches = sketches;
         updateLikeStatus().then((sketch) => {
           showActionsOnHover();
@@ -49,7 +49,19 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
 
   const init = () => {
 	  $(document).ready(() => {
-		  $('.ui.dropdown').dropdown();
+		  $('#date.ui.dropdown').dropdown({
+			  onChange: (value, text, $selectedItem) => {
+				  const actions = {
+					  "hoy": () => moment().startOf('day').toDate().getTime(),
+					  "esta semana": () =>  moment().startOf('isoweek').toDate().getTime(),
+					  "este mes": () => moment().startOf('month').toDate().getTime(),
+					  "este anio": () => moment().startOf('year').toDate().getTime(),
+					  "desde el comienzo": () => null
+				  };
+				  loadSketches(actions[value]());
+			  }
+		  });
+		  //TODO: Cuadro de busqueda !!!!
 	  });
   };
 

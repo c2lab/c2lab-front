@@ -12,7 +12,8 @@ angular.module('myApp', [
   'myApp.examples',
   'myApp.exampleSvc',
   'myApp.version',
-  'myApp.likeSvc'
+  'myApp.likeSvc',
+	'ngFeathers'
 ])
     
 .config([
@@ -20,7 +21,7 @@ angular.module('myApp', [
   '$locationProvider',
   '$routeProvider',
   '$httpProvider',
-  '$windowProvider', function($angularAuthProvider, $locationProvider, $routeProvider, $httpProvider, $windowProvider) {
+  '$windowProvider', '$feathersProvider', function($angularAuthProvider, $locationProvider, $routeProvider, $httpProvider, $windowProvider, $feathersProvider) {
 
   $angularAuthProvider.init({
     clientID: 'VUs3zBHunPr1YqUooaqN0D1g9IaACyoH',
@@ -30,12 +31,22 @@ angular.module('myApp', [
     redirectUri: $windowProvider.$get().location.origin,
     scope: 'openid'
   });
-    
+
+  console.log($feathersProvider);
+
+	$feathersProvider.setEndpoint('http://localhost:3000');
+	$feathersProvider.useSocket(false);
+	$feathersProvider.setAuthStorage(localStorage);
+
   $locationProvider.hashPrefix('!');
 
   function checkUserSession(authService, $location){
+
     if (authService.isAuthenticated()) {
       $httpProvider.defaults.headers.common = { 'Authorization': `Bearer ${localStorage.id_token}` };
+	    $.ajaxSetup({
+		    headers: { 'Authorization': `Bearer ${localStorage.id_token}` }
+	    });
       return true;
     } else {
       $location.path("/login")

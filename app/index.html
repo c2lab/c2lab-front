@@ -17,30 +17,33 @@
 </head>
 <body >
 
-  <div class="ui top attached menu" ng-controller="mainCtrl" ng-show="isAuthenticated()">
+  <div class="ui top secondary attached menu" ng-controller="mainCtrl" ng-show="isAuthenticated()">
     <div class="header item">
      C2LAB
     </div>
-    <navbar-button ng-cloak path="/gallery">
+    <navbar-button ng-cloak path="/gallery" class="ui item">
+      <i class="image icon big"></i>
       Galeria
     </navbar-button>
-    <navbar-button ng-cloak path="/editor">
+    <navbar-button ng-cloak path="/editor" class="ui item">
+      <i class="align left icon big"></i>
       Editor
     </navbar-button>
-    <navbar-button ng-cloak path="/examples">
+    <navbar-button ng-cloak path="/examples" class="ui item">
+      <i class="object group icon big"></i>
       Ejemplos
     </navbar-button>
-    <navbar-button ng-cloak path="/tutorials">
-      Tutoriales
-    </navbar-button>
-    <navbar-button ng-cloak path="/social">
+    <navbar-button ng-cloak path="/social" class="ui item">
+      <i class="comments icon big"></i>
       Social
     </navbar-button>
     <div class="right menu">
       <a class="ui item" ng-click="logout()">
+        <i class="user outline"></i>
         Logout
       </a>
       <paypal-button
+        class="ui item"
         env="paypal.env"
         client="paypal.client"
         payment="paypal.payment"
@@ -75,5 +78,7 @@
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
   <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4></script>
+  <script src="bower_components/ng-feathers/dist/ng-feathers.standalone.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 </body>
 </html>
