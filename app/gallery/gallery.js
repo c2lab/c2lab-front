@@ -89,12 +89,14 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     if (sketch.isLiked) {
       sketch.isLiked = false;
       sketch.totalLikes = sketch.totalLikes - 1;
+	    $('.heart.icon.sketch-icon').transition('jiggle');
       likeSvc.dislike({ sketch }).then((response) => {
         updateLikeStatusFor(sketch);
       });
     } else {
       sketch.isLiked = true;
       sketch.totalLikes = sketch.totalLikes + 1;
+	    $('.heart.icon.sketch-icon').transition('jiggle');
       likeSvc.like({ sketch }).then((response) => {
         updateLikeStatusFor(sketch);
       });
