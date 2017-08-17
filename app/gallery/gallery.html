@@ -2,8 +2,8 @@
 <div class="ui attached menu ">
     <div class="ui category search item">
         <div class="ui transparent icon input">
-            <input class="prompt" type="text" placeholder="Buscar por tag o nombre">
-            <i class="search link icon large"></i>
+            <input class="prompt" type="text" placeholder="Buscar por tag o nombre" ng-model="textSearch">
+            <i class="search link icon large" ng-click="search()"></i>
         </div>
     </div>
     <!--<div class="item">-->

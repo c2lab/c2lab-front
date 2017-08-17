@@ -32,9 +32,9 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     });
   }
 
-  let loadSketches = (date) => {
+  let loadSketches = (date, search) => {
     authService.currentUser().then((user) => {
-      sketchSvc.all({ user , date }).then((sketches) => {
+      sketchSvc.all({ user , date, search }).then((sketches) => {
         $scope.sketches = sketches;
         updateLikeStatus().then((sketch) => {
           showActionsOnHover();
@@ -47,6 +47,8 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     });
   }
 
+  let dateSearch;
+
   const init = () => {
 	  $(document).ready(() => {
 		  $('#date.ui.dropdown').dropdown({
@@ -58,7 +60,8 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
 					  "este anio": () => moment().startOf('year').toDate().getTime(),
 					  "desde el comienzo": () => null
 				  };
-				  loadSketches(actions[value]());
+				  dateSearch = actions[value]();
+				  loadSketches(dateSearch, $scope.textSearch);
 			  }
 		  });
 		  //TODO: Cuadro de busqueda !!!!
@@ -96,7 +99,11 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
         updateLikeStatusFor(sketch);
       });
     }
-  }
+  };
+
+  $scope.search = () => {
+		loadSketches(dateSearch, $scope.textSearch);
+  };
 
   angular.element(document).ready(function () {
     $scope.confirmDeleteModal = $("#confirm-delete-modal");

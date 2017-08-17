@@ -2,10 +2,12 @@
 
 angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', '$feathers', function($q, $http, $feathers) {
   return {
-    all: function({ user, date }) {
-	    var sketchService = $feathers.service('sketches')
+    all: function({ user, date, search }) {
+	    const sketchService = $feathers.service('sketches');
 	    const query = {owner: user.user_id};
 	    if (date) query.updated_at = { $gte: date };
+	    //TODO: All this should work with an elasticsearch
+	    if (search) query.$or = [{tags: {$in: search.split(/\W+/)}}, {$text: { $search: search}}];
 	    return sketchService.find({ query }).then((x) => x.data);
     },
     create: function(sketch) {
