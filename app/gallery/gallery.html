@@ -2,7 +2,7 @@
 <div class="ui attached menu ">
     <div class="ui category search item">
         <div class="ui transparent icon input">
-            <input class="prompt" type="text" placeholder="Buscar por tag o nombre" ng-model="textSearch">
+            <input id="search" class="prompt" type="text" placeholder="Buscar por tag o nombre" ng-model="textSearch">
             <i class="search link icon large" ng-click="search()"></i>
         </div>
     </div>
@@ -77,15 +77,15 @@
             <div class="blurring dimmable image">
                 <div class="ui dimmer transition hidden sketch-box">
                     <div class="content">
-                        <div class="center">
+                        <div class="center sketch-icons">
                             <h2 class="ui inverted header">{{sketch.title}}</h2>
-                            <i class="pencil icon sketch-icon" ng-if="canEdit(sketch)" ng-click="edit(sketch)"></i>
                             {{ sketch.totalLikes }}
                             <i class="heart icon sketch-icon" ng-class="{ empty: !sketch.isLiked }" ng-click="switchLike(sketch)"></i>
+                            <i class="pencil icon sketch-icon" ng-if="canEdit(sketch)" ng-click="edit(sketch)"></i>
                             <!--Add starring (personal like, other users do not see it) -->
                             <!--<i class="empty star icon sketch-icon"></i>-->
                             <i class="empty github alternate sketch-icon"></i>
-                            <i class="remove icon sketch-icon" ng-if="canRemove(sketch)" ng-click="delete(sketch)"></i>
+                            <i class="trash icon sketch-icon" ng-if="canRemove(sketch)" ng-click="delete(sketch)"></i>
                         </div>
                     </div>
                 </div>
@@ -98,13 +98,13 @@
 
     </div>
 </div>
-<div id="confirm-delete-modal" class="ui modal">
+<div id="confirm-delete-modal" class="ui modal mini">
     <div class="header">Delete Sketch</div>
     <div class="content">
-        Are you sure?
+        Seguro que deseas eliminar el sketch?
     </div>
     <div class="actions">
-        <div class="ui approve button">Delete</div>
-        <div class="ui cancel button">Cancel</div>
+        <div class="ui approve button">Eliminar</div>
+        <div class="ui cancel button">Cancelar</div>
     </div>
 </div>

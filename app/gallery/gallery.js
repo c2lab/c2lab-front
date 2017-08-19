@@ -3,13 +3,13 @@
 let gallery = angular.module('myApp.gallery', []);
 
 function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
-  function showActionsOnHover() {
-    $(document).ready(function() {
-      $(".sketch-box").dimmer({
-        on: "hover"
-      });
-    });
-  }
+	function showActionsOnHover() {
+		$(document).ready(function() {
+			$(".sketch-box").dimmer({
+				on: "hover"
+			});
+		});
+	}
 
   let updateLikeStatus = () => {
     return likeSvc.myLikesFor({ sketches: $scope.sketches }).then((likes) => {
@@ -64,18 +64,22 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
 				  loadSketches(dateSearch, $scope.textSearch);
 			  }
 		  });
-		  //TODO: Cuadro de busqueda !!!!
+		  $('#search').keyup(_.debounce($scope.search, 500));
 	  });
   };
+
+	$scope.search = () => {
+		loadSketches(dateSearch, $scope.textSearch);
+	};
 
   init();
 
   loadSketches();
 
   $scope.edit = ({ _id }) =>  $location.path("/editor").search({ sketch_id: _id });
-  
+
   $scope.delete = ({ _id }) =>  {
-    $scope.confirmDeleteModal.modal('setting', {
+    $scope.confirmDeleteModal.modal({blurring: true}, {
       onApprove: () => {
         sketchSvc.delete(_id).then(({ title }) => {
           console.log(`${title} was correctly deleted.`);
@@ -85,27 +89,14 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     }).modal("show");
   }
 
-  $scope.switchLike = (sketch) => {
-    if (sketch.isLiked) {
-      sketch.isLiked = false;
-      sketch.totalLikes = sketch.totalLikes - 1;
-	    $('.heart.icon.sketch-icon').transition('jiggle');
-      likeSvc.dislike({ sketch }).then((response) => {
-        updateLikeStatusFor(sketch);
-      });
-    } else {
-      sketch.isLiked = true;
-      sketch.totalLikes = sketch.totalLikes + 1;
-	    $('.heart.icon.sketch-icon').transition('jiggle');
-      likeSvc.like({ sketch }).then((response) => {
-        updateLikeStatusFor(sketch);
-      });
-    }
-  };
-
-  $scope.search = () => {
-		loadSketches(dateSearch, $scope.textSearch);
-  };
+  $scope.switchLike = _.debounce((sketch) => {
+	  sketch.isLiked = !sketch.isLiked;
+	  $('.heart.icon.sketch-icon').transition('jiggle');
+	  sketch.totalLikes+= sketch.isLiked ? 1 : -1;
+	  (sketch.isLiked ? likeSvc.like({ sketch }) : likeSvc.dislike({ sketch })).then(() => {
+		  updateLikeStatusFor(sketch);
+	  });
+  }, 500, {leading: true});
 
   angular.element(document).ready(function () {
     $scope.confirmDeleteModal = $("#confirm-delete-modal");
