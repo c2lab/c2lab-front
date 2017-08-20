@@ -34,7 +34,7 @@ angular.module('myApp', [
 
   console.log($feathersProvider);
 
-	$feathersProvider.setEndpoint('http://localhost:3000');
+	$feathersProvider.setEndpoint(beURL);
 	$feathersProvider.useSocket(false);
 	$feathersProvider.setAuthStorage(localStorage);
 
