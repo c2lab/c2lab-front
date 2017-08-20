@@ -36,7 +36,6 @@ angular.module('myApp.editor', [])
       }
 
       $scope.openModal = () => {
-  			if (currentSketch) loadSketch();
         $scope.modal.modal("show");
       }
 
@@ -82,10 +81,8 @@ angular.module('myApp.editor', [])
       editor.setTheme("ace/theme/ambiance");
       editor.session.setMode("ace/mode/scala");
 
-      var currentSketch;
-
       const loadSketch =  () => {
-  	    currentSketch.then(({ title, code, tags, thumbnails }) => {
+  	    sketchSvc.find($routeParams.sketch_id).then(({ title, code, tags, thumbnails }) => {
   		    $scope.sketch_id = $routeParams.sketch_id;
   		    $scope.title = title;
   		    $scope.tags = tags;
@@ -95,7 +92,6 @@ angular.module('myApp.editor', [])
       }
 
       if ($routeParams.sketch_id) {
-  	    currentSketch = sketchSvc.find($routeParams.sketch_id);
   	    loadSketch();
       } else if ($routeParams.script) {
         editor.setValue($routeParams.script);
