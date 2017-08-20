@@ -2,7 +2,7 @@
 
 let gallery = angular.module('myApp.gallery', []);
 
-function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
+function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc, $timeout) {
   function showActionsOnHover() {
     $(document).ready(function() {
       $(".sketch-box").dimmer({
@@ -89,14 +89,14 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
     if (sketch.isLiked) {
       sketch.isLiked = false;
       sketch.totalLikes = sketch.totalLikes - 1;
-	    $('.heart.icon.sketch-icon').transition('jiggle');
+      $('.heart.icon.sketch-icon').transition('jiggle');
       likeSvc.dislike({ sketch }).then((response) => {
         updateLikeStatusFor(sketch);
       });
     } else {
       sketch.isLiked = true;
       sketch.totalLikes = sketch.totalLikes + 1;
-	    $('.heart.icon.sketch-icon').transition('jiggle');
+      $('.heart.icon.sketch-icon').transition('jiggle');
       likeSvc.like({ sketch }).then((response) => {
         updateLikeStatusFor(sketch);
       });
@@ -104,12 +104,27 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc) {
   };
 
   $scope.search = () => {
-		loadSketches(dateSearch, $scope.textSearch);
+    loadSketches(dateSearch, $scope.textSearch);
   };
 
   angular.element(document).ready(function () {
     $scope.confirmDeleteModal = $("#confirm-delete-modal");
   });
+
+  (function rotateThumbnails(i) {
+    if ($scope.sketches) {
+      $scope.sketches.forEach((sketch) => {
+        if (sketch.thumbnails.length) {
+          sketch.shownThumbnail = sketch.thumbnails[i % sketch.thumbnails.length];
+        } else {
+          sketch.shownThumbnail = 'assets/no-preview.png';
+        }
+      });
+    }
+
+    $timeout(() => rotateThumbnails(i + 1), 1000);
+  })(0);
 }
 
-gallery.controller('GalleryCtrl', [ "$scope", "authService", "sketchSvc", "$location", "$q", "likeSvc", GalleryCtrl]);
+
+gallery.controller('GalleryCtrl', [ "$scope", "authService", "sketchSvc", "$location", "$q", "likeSvc", "$timeout", GalleryCtrl]);

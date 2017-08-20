@@ -73,7 +73,7 @@
 <div class="ui attached segment">
     <div class="ui medium cards">
 
-        <div class="ui card" ng-repeat="sketch in sketches track by $index">
+        <div class="ui card sketch-card" ng-repeat="sketch in sketches track by $index">
             <div class="blurring dimmable image">
                 <div class="ui dimmer transition hidden sketch-box">
                     <div class="content">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <img class="bordered ui image" ng-src="{{ sketch.path || 'assets/no-preview.png' }}">
+                <img class="bordered ui image thumbnail" ng-src="{{ sketch.shownThumbnail }}">
             </div>
         </div>
         <strong class="no-sketches-message" ng-if="!sketches.length">
