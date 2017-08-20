@@ -1,16 +1,17 @@
 'use strict';
 
 angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', '$feathers', function($q, $http, $feathers) {
+	const sketchService = $feathers.service('sketches');
+
   return {
-    all: function({ user, date, search }) {
-	    const sketchService = $feathers.service('sketches');
+    all: ({ user, date, search }) => {
 	    const query = {owner: user.user_id};
 	    if (date) query.updated_at = { $gte: date };
 	    //TODO: All this should work with an elasticsearch
 	    if (search) query.$or = [{tags: {$in: search.split(/\W+/)}}, {$text: { $search: search}}];
 	    return sketchService.find({ query }).then((x) => x.data);
     },
-    create: function(sketch) {
+    create: (sketch) => {
       let deferred  = $q.defer();
 
       $http({
@@ -25,7 +26,7 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', '$fea
 
       return deferred.promise;
     },
-    find: function(id) {
+    find: (id) => {
       let deferred  = $q.defer();
 
       $http({
@@ -55,7 +56,7 @@ angular.module('myApp.sketchSvc', []).service("sketchSvc", ['$q', '$http', '$fea
 
       return deferred.promise;
     },
-    delete: function(id) {
+    delete: (id) => {
       let deferred  = $q.defer();
 
       $http({

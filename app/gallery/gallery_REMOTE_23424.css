@@ -9,6 +9,3 @@
     margin-top: 5%;
 }
 
-.ui.card > .image > img.thumbnail, .ui.cards > .card > .image > img.thumbnail {
-    height: 222px;
-}

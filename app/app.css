@@ -20,3 +20,7 @@ body {
   border-top: 2px solid rgba(34,36,38,.15);
 }
 
+.gallery-container {
+  border-bottom: 0 !important;
+}
+
