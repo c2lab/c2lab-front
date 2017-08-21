@@ -80,6 +80,9 @@ angular.module('myApp.editor', [])
 
       editor.setTheme("ace/theme/ambiance");
       editor.session.setMode("ace/mode/scala");
+	    editor.setOptions({
+		    fontSize: "16pt"
+	    });
 
       const loadSketch =  () => {
   	    sketchSvc.find($routeParams.sketch_id).then(({ title, code, tags, thumbnails }) => {
