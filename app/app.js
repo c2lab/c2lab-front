@@ -32,8 +32,6 @@ angular.module('myApp', [
     scope: 'openid'
   });
 
-  console.log($feathersProvider);
-
 	$feathersProvider.setEndpoint(beURL);
 	$feathersProvider.useSocket(false);
 	$feathersProvider.setAuthStorage(localStorage);
