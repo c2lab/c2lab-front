@@ -1,5 +1,6 @@
 .sketch-icon {
   cursor: pointer;
+  color: white !important;
 }
 
 .no-sketches-message {

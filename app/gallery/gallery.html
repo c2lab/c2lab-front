@@ -81,7 +81,9 @@
                             <h2 class="ui inverted header">{{sketch.title}}</h2>
                             {{ sketch.totalLikes }}
                             <i class="heart big icon sketch-icon" ng-class="{ empty: !sketch.isLiked }" ng-click="switchLike(sketch)"></i>
-                            <i class="share alternate big icon sketch-icon" ng-mouseover="getLink($event, sketch)"></i>
+                            <a href="{{ shareLink(sketch._id) }}">
+                                <i class="share alternate big icon sketch-icon"></i>
+                            </a>
                             <i class="pencil big icon sketch-icon" ng-if="canEdit(sketch)" ng-click="edit(sketch)"></i>
                             <!--Add starring (personal like, other users do not see it) -->
                             <!--<i class="empty star icon sketch-icon"></i>-->

@@ -89,16 +89,7 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc, $ti
     }).modal("show");
   }
 
-  $scope.getLink = ($event, sketch) => {
-	  $($event.target).popup({
-			  html: `<a target="_blank" href="${window.beURL}/sketches/showcase/${sketch._id}">${sketch.title} link</a>`,
-		    // delay: {
-			  	// hide: 500
-		    // },
-		  hoverable: true,
-			  variation : 'basic'
-		  }).popup('show');
-  };
+	$scope.shareLink = (sketchId) => `${window.beURL}/sketches/showcase/${sketchId}`;
 
   $scope.switchLike = _.debounce((sketch) => {
 	  sketch.isLiked = !sketch.isLiked;
