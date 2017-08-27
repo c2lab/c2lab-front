@@ -8,6 +8,13 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc, $ti
       $(".sketch-box").dimmer({
         on: "hover"
       });
+	    $('.share').popup({
+		    content: 'Link copiado en el portapapeles',
+		    on: 'click',
+		    onVisible: () => {
+			    _.delay(() => $('.share').popup('hide'), 1000);
+		    }
+	    });
     });
   }
 
@@ -65,6 +72,7 @@ function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc, $ti
 			  }
 		  });
 		  $('#search').keyup(_.debounce($scope.search, 500));
+		  new Clipboard('.share');
 	  });
   };
 
