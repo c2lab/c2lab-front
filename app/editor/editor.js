@@ -76,10 +76,14 @@ angular.module('myApp.editor', [])
   		  $scope.tags.push($scope.tag);
   	  };
 
-      var editor = ace.edit("editor");
+      const editor = ace.edit("editor");
 
       editor.setTheme("ace/theme/ambiance");
       editor.session.setMode("ace/mode/scala");
+	    editor.setOptions({
+		    fontSize: "16pt",
+		    enableBasicAutocompletion: true
+	    });
 
       const loadSketch =  () => {
   	    sketchSvc.find($routeParams.sketch_id).then(({ title, code, tags, thumbnails }) => {

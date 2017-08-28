@@ -2,11 +2,11 @@
     <div id="menu">
         <div class="button" ng-click="getPreview()">
             <i class="video play outline icon"></i>
-            <span>Preview</span>
+            <span>Previsualizar</span>
         </div>
         <div class="button" ng-click="openModal()" ng-class="{ disabled: !modal }">
             <i class="save icon"></i>
-            <span>Save</span>
+            <span>Guardar</span>
         </div>
     </div>
     <div id="editorContainer">
@@ -20,16 +20,16 @@
         <iframe id="previewIframe" src="empty_sketch.html"></iframe>
     </div>
     <div id="save-modal" class="ui modal">
-        <div class="header">Save Sketch</div>
+        <div class="header">Guardar Sketch</div>
         <div class="content">
             <div class="ui segments">
                 <div class="ui segment">
-                Title:
+                Titulo:
                 <span class="ui icon transparent input">
                     <input id="titleInput" type="text" placeholder="my awesome sketch" ng-model="title" required>
                 </span>
                 <div ng-if="showNoTitleMessage">
-                    Please add a title
+                    Agrega un titulo
                 </div>
                 </div>
                 <div class="ui secondary segment">
@@ -37,19 +37,19 @@
                         <i class="tags icon"></i>
                         <input type="text" placeholder="Enter tags" ng-model="tag">
                         <a class="ui tag label" ng-click="addTag()">
-                            Add Tag
+                            Agrega un Tag
                         </a>
                     </div>
                     <div class="ui divider"></div>
-                    <div ng-repeat="tag in tags track by $index">
-                        <a class="ui tag label" ng-click="removeTag($index)">{{tag}}<i class="delete icon"></i></a>
+                    <div class="ui labels">
+                        <a class="ui tag label" ng-click="removeTag($index)" ng-repeat="tag in tags track by $index">{{tag}}<i class="delete icon"></i></a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="actions">
-            <div class="ui approve button" ng-class="{ disabled: !canSave() }">Save</div>
-            <div class="ui cancel button">Cancel</div>
+            <div class="ui approve button" ng-class="{ disabled: !canSave() }">Guardar</div>
+            <div class="ui cancel button">Cancelar</div>
         </div>
     </div>
 </div>

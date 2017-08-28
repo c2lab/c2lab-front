@@ -28,11 +28,9 @@ angular.module('myApp', [
     domain: 'c2lab.auth0.com',
     responseType: 'token id_token',
     audience: 'https://c2lab.auth0.com/userinfo',
-    redirectUri: $windowProvider.$get().location.origin,
+    redirectUri: $windowProvider.$get().location.origin + "/app",
     scope: 'openid'
   });
-
-  console.log($feathersProvider);
 
 	$feathersProvider.setEndpoint(beURL);
 	$feathersProvider.useSocket(false);

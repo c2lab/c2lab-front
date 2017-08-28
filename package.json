@@ -22,7 +22,7 @@
     "update-deps": "npm update",
     "postupdate-deps": "bower update",
     "prestart": "./app/env/setenv.sh; npm install",
-    "start": "http-server -a 0.0.0.0 -p ${PORT:-8000} -c-1 ./app",
+    "start": "http-server -a 0.0.0.0 -p ${PORT:-8000} -c-1",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",
