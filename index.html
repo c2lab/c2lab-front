@@ -16,15 +16,13 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
-            background: url("app/assets/home-background.gif");
-            background-position: center center ;
         }
 
         #hero{
             color: #0b486b;
             flex: 1;
             width: 65%;
-            background-color: rgba(255, 255, 255, .4);
+            background-color: rgba(255, 255, 255, .6);
             margin: 0 auto;
             margin-top: 10%;
             margin-bottom: 10%;
@@ -35,11 +33,19 @@
         h1 {
             font-size: 10em;
         }
+
+        iframe {
+            position: absolute;
+            float: left;
+            clear: both;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
     </style>
 </head>
 <body>
 <div id="hero" class="ui segment">
-
     <div class="ui text container">
         <h1>
             C2LAB
@@ -47,7 +53,9 @@
         <h2>Crea y comparte tus obras!</h2>
         <a href="app" class="ui huge primary button">Empezar<i class="right arrow icon"></i></a>
     </div>
-
 </div>
+<!--TODO: Get dinamically from examples-->
+<iframe src="http://212.47.250.190:3000/sketches/showcase/59a7f0a2d0af9c4f8e4f9d6a">
+</iframe>
 </body>
 </html>
