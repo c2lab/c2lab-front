@@ -82,6 +82,7 @@
                             {{ sketch.totalLikes }}
                             <i class="heart big icon sketch-icon" ng-class="{ empty: !sketch.isLiked }" ng-click="switchLike(sketch)"></i>
                             <i class="share alternate big icon sketch-icon" data-clipboard-text="{{ shareLink(sketch._id) }}"></i>
+                            <i class="github big icon sketch-icon" ng-if="canEdit(sketch)" ng-click="gistLinkFor(sketch)" id="{{ 'gist' + sketch._id }}"></i>
                             <i class="pencil big icon sketch-icon" ng-if="canEdit(sketch)" ng-click="edit(sketch)"></i>
                             <!--Add starring (personal like, other users do not see it) -->
                             <!--<i class="empty star icon sketch-icon"></i>-->

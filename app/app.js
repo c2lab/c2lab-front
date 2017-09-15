@@ -13,9 +13,10 @@ angular.module('myApp', [
   'myApp.exampleSvc',
   'myApp.version',
   'myApp.likeSvc',
+  'myApp.gistSvc',
 	'ngFeathers'
 ])
-    
+
 .config([
   'angularAuth0Provider',
   '$locationProvider',
@@ -59,7 +60,7 @@ angular.module('myApp', [
             let match = $location.url().match(new RegExp(`${param}=([^&]+)`));
             return match && match[1];
           }
-          
+
           let deferred = $q.defer();
           if (authService.isAuthenticated()) {
             $location.path('/gallery');
@@ -106,7 +107,7 @@ angular.module('myApp', [
     .otherwise({redirectTo: '/gallery'});
 
 }])
-    
+
 .controller("mainCtrl", [ "$scope", "authService", function ($scope, authService) {
   $scope.isAuthenticated = () => {
     return authService.isAuthenticated()
@@ -140,7 +141,7 @@ angular.module('myApp', [
     }
   };
 }])
-    
+
 .service("authService", ["angularAuth0", "$location", "$q", "$http", "$window", function authService(angularAuth0, $location, $q, $http, $window) {
 
   function logout() {
