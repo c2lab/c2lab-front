@@ -108,38 +108,25 @@ angular.module('myApp', [
 
 }])
 
-.controller("mainCtrl", [ "$scope", "authService", function ($scope, authService) {
+.controller('mainCtrl', [ '$scope', 'authService', '$feathers', function ($scope, authService, $feathers) {
+	const userService = $feathers.service('users');
+
   $scope.isAuthenticated = () => {
     return authService.isAuthenticated()
   };
+
   $scope.logout = () => authService.logout();
 
-  $scope.paypal = {
-    env: 'sandbox',
-    client: {
-        sandbox:    'AVZkdF57wtyVstw9mz8R3dRsIZTlMoYwNGzxaJfWCK3YMU0Z230wDlBlHw4h6QvMvvs2xC5E5SYR0Evr'
-    },
-    payment: function() {
-        var env    = this.props.env;
-        var client = this.props.client;
-        return paypal.rest.payment.create(env, client, {
-            transactions: [
-                {
-                    amount: { total: '0.01', currency: 'USD' }
-                }
-            ]
-        });
-    },
-    commit: true, // Optional: show a 'Pay Now' button in the checkout flow
-    onAuthorize: function(data, actions) {
-        // Optional: display a confirmation page here
-        console.log("confirm")
-        return actions.payment.execute().then(function() {
-            // Show a success page to the buyer
-            console.log("Success")
-        });
-    }
-  };
+  $scope.showPayment = false;
+
+	$(document).ready(() => {
+		authService.currentUser().then((user) => {
+			$scope.userId = user.user_id;
+			$scope.showPayment = user.user_type === 'STD';
+		});
+		$scope.notifyUrl = `${ipnURL}/ipn`;
+	});
+
 }])
 
 .service("authService", ["angularAuth0", "$location", "$q", "$http", "$window", function authService(angularAuth0, $location, $q, $http, $window) {
