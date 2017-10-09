@@ -104,6 +104,13 @@ angular.module('myApp', [
         factory: checkUserSession
       }
     })
+    .when('/social', {
+      templateUrl: 'social/index.html',
+      controller: 'SocialCtrl',
+      resolve: {
+        factory: checkUserSession
+      }
+    })
     .otherwise({redirectTo: '/gallery'});
 
 }])
