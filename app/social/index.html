@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="social/index.css">
+<div class="ui attached segment social-container">
+  <div class="ui medium cards">
+
+    <div class="ui card followed-card" ng-repeat="followed in followeds track by $index">
+      <div class="blurring dimmable image">
+        <div class="ui dimmer transition hidden followed-box">
+          <div class="content">
+            <div class="center followed-icons">
+              <h2 class="ui inverted header">{{followed.name}}</h2>
+            </div>
+          </div>
+        </div>
+        <img class="bordered ui image thumbnail" ng-src="{{ followed.avatar }}">
+      </div>
+    </div>
+    <strong class="no-followeds-message" ng-if="!followeds.length">
+      Todavía no seguís a nadie.
+    </strong>
+
+  </div>
+</div>
