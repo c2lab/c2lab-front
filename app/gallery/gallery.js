@@ -87,7 +87,7 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
     $scope.edit = ({_id}) => $location.path("/editor").search({sketch_id: _id});
 
     $scope.delete = ({_id}) => {
-      $scope.confirmDeleteModal.modal({blurring: true}, {
+      $scope.confirmDeleteModal.modal({blurring: true,
         onApprove: () => {
           sketchSvc.delete(_id).then(({title}) => {
             console.log(`${title} was correctly deleted.`);
