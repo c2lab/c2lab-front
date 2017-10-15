@@ -7,10 +7,12 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.navbar',
   'myApp.gallery',
+  'myApp.social',
   'myApp.sketchSvc',
   'myApp.editor',
   'myApp.examples',
   'myApp.exampleSvc',
+  'myApp.followerSvc',
   'myApp.version',
   'myApp.likeSvc',
   'myApp.gistSvc',
@@ -100,6 +102,13 @@ angular.module('myApp', [
     .when('/editor', {
       templateUrl: 'editor/editor.html',
       controller: 'EditorCtrl',
+      resolve: {
+        factory: checkUserSession
+      }
+    })
+    .when('/social', {
+      templateUrl: 'social/index.html',
+      controller: 'SocialCtrl',
       resolve: {
         factory: checkUserSession
       }
