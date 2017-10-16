@@ -1,22 +1,24 @@
 <link rel="stylesheet" href="social/index.css">
-<div class="ui attached segment social-container">
-  <div class="ui medium cards">
-
-    <div class="ui card followed-card" ng-repeat="followed in followeds track by $index">
-      <div class="blurring dimmable image">
-        <div class="ui dimmer transition hidden followed-box">
-          <div class="content">
-            <div class="center followed-icons">
-              <h2 class="ui inverted header">{{followed.name}}</h2>
-            </div>
-          </div>
-        </div>
-        <img class="bordered ui image thumbnail" ng-src="{{ followed.avatar }}">
-      </div>
+<div class="ui attached menu ">
+  <div class="ui category search item">
+    <div class="ui transparent icon input">
+      <input id="search" class="prompt" type="text" placeholder="Buscar amigos" ng-model="textSearch">
+      <i class="search link icon large" ng-click="search()"></i>
     </div>
-    <strong class="no-followeds-message" ng-if="!followeds.length">
-      Todavía no seguís a nadie.
-    </strong>
-
   </div>
 </div>
+<users-list
+  ng-if="followeds"
+  users="followeds"
+  title="Seguidos">
+</users-list>
+<users-list
+  ng-if="followeds"
+  users="followeds"
+  title="Seguidos">
+</users-list>
+<div class="ui medium no-users">
+  <strong ng-if="!followeds && !searchedUsers">
+    Busca amigos y empeza a seguirlos
+  </strong>
+<div>

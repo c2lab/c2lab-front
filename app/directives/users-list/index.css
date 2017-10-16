@@ -1,0 +1,15 @@
+.user-icon {
+  cursor: pointer;
+  color: white !important;
+}
+
+.no-users-message {
+    width: 100%;
+    text-align: center;
+    font-size: x-large;
+    margin-top: 5%;
+}
+
+.ui.card > .image > img.thumbnail, .ui.cards > .card > .image > img.thumbnail {
+    height: 222px;
+}

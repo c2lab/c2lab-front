@@ -13,6 +13,7 @@ angular.module('myApp', [
   'myApp.examples',
   'myApp.exampleSvc',
   'myApp.followerSvc',
+  'myApp.userSvc',
   'myApp.version',
   'myApp.likeSvc',
   'myApp.gistSvc',
