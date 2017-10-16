@@ -1,8 +1,11 @@
 'use strict';
 
-angular.module('myApp.social', []).controller('SocialCtrl', [
-  "$scope", "authService", "followerSvc", "$q", "userSvc",
-  function SocialCtrl($scope, authService, followerSvc, $q, userSvc) {
+angular.module('myApp.social', []).controller('SocialCtrl', ["$scope", "authService", "followerSvc", "$q", "$feathers",
+  function SocialCtrl($scope, authService, followerSvc, $q, $feathers) {
+	  const usersService = $feathers.service('users');
+
+	  usersService.find({}).then(console.log);
+
     let loadFolloweds = () => {
       authService.currentUser().then((user) => {
         followerSvc.find({ follower: user }).then((followeds) => {
@@ -14,7 +17,7 @@ angular.module('myApp.social', []).controller('SocialCtrl', [
     loadFolloweds();
 
     $scope.search = () => {
-      userSvc.find({ search: $scope.textSearch }).then((searchedUsers) => {
+      usersService.find({ search: $scope.textSearch }).then((searchedUsers) => {
         $scope.searchedUsers = searchedUsers;
       });
     }

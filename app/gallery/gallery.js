@@ -30,16 +30,16 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
       });
     }
 
-    let updateLikeStatusFor = (sketch) => {
+    const updateLikeStatusFor = (sketch) => {
       return likeSvc.myLikeFor({sketch}).then((like) => {
         likeSvc.sketchTotal({sketch}).then((total) => {
           sketch.isLiked = !!like;
           sketch.totalLikes = total;
         });
       });
-    }
+    };
 
-    let loadSketches = (date, search) => {
+    const loadSketches = (date, search) => {
       authService.currentUser().then((user) => {
         sketchSvc.all({user, date, search}).then((sketches) => {
           $scope.sketches = sketches;
@@ -52,7 +52,7 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
         $scope.canEdit = isOwner;
         $scope.canRemove = isOwner;
       });
-    }
+    };
 
     let dateSearch;
 
@@ -64,7 +64,7 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
               "hoy": () => moment().startOf('day').toDate().getTime(),
               "esta semana": () => moment().startOf('isoweek').toDate().getTime(),
               "este mes": () => moment().startOf('month').toDate().getTime(),
-              "este anio": () => moment().startOf('year').toDate().getTime(),
+              "este año": () => moment().startOf('year').toDate().getTime(),
               "desde el comienzo": () => null
             };
             dateSearch = actions[value]();
@@ -87,7 +87,7 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
     $scope.edit = ({_id}) => $location.path("/editor").search({sketch_id: _id});
 
     $scope.delete = ({_id}) => {
-      $scope.confirmDeleteModal.modal({blurring: true}, {
+      $scope.confirmDeleteModal.modal({blurring: true,
         onApprove: () => {
           sketchSvc.delete(_id).then(({title}) => {
             console.log(`${title} was correctly deleted.`);
