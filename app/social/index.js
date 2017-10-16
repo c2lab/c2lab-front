@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('myApp.social', []).controller('SocialCtrl',
-  ["$scope", "authService", "followerSvc", "$q", "userSvc",
-  function SocialCtrl($scope, authService, followerSvc, $q, usersService) {
+  ["$scope", "authService", "followerSvc", "$q", "userSvc", "$location",
+  function SocialCtrl($scope, authService, followerSvc, $q, usersService, $location) {
     let loadFolloweds = () => {
       authService.currentUser().then((user) => {
         followerSvc.find({ follower: user }).then((followeds) => {
@@ -45,6 +45,10 @@ angular.module('myApp.social', []).controller('SocialCtrl',
           updateFollowStatus([user]);
         })
       });
+    };
+
+    $scope.goToGallery = (user) => {
+      $location.path('/gallery').search({ user_id: user.user_id });
     };
 
     const initUsersList = () => {

@@ -95,8 +95,17 @@ angular.module('myApp.editor', [])
   	    });
       }
 
+      const copySketch =  (id) => {
+        sketchSvc.find(id).then(({ title, code }) => {
+          $scope.title = "Copia de " + title;
+          editor.setValue(code);
+        });
+      }
+
       if ($routeParams.sketch_id) {
   	    loadSketch();
+      } else if ($routeParams.copied_sketch_id) {
+        copySketch($routeParams.copied_sketch_id);
       } else if ($routeParams.script) {
         editor.setValue($routeParams.script);
       } else {

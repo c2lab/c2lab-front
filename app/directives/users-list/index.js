@@ -6,7 +6,8 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
       title: '@',
       users: '=',
       noUsersMessage: '@',
-      onFollow: '='
+      onFollow: '=',
+      onUserClick: '='
     },
     template: `
     <link rel="stylesheet" href="directives/users-list/index.css">
@@ -21,7 +22,13 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
             <div class="ui dimmer transition hidden user-box">
               <div class="content">
                 <div class="center user-icons">
-                  <h2 class="ui inverted header">{{user.nickname}}</h2>
+                  <a>
+                    <h2
+                      class="ui inverted header"
+                      ng-click="onUserClick(user)">
+                      {{user.nickname}}
+                    </h2>
+                  </a>
                   <i class="icon user-icon" ng-class="{ add: !user.isFollowed, user: !user.isFollowed, checkmark: user.isFollowed }" ng-click="onFollow(user)"></i>
                 </div>
               </div>

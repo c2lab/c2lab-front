@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('myApp.gallery', []).controller('GalleryCtrl', [
-  "$scope", "authService", "sketchSvc", "$location", "$q", "likeSvc", "gistSvc", "$timeout",
-  function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc, gistSvc, $timeout) {
+  "$scope", "authService", "sketchSvc", "$location", "$q", "likeSvc", "gistSvc", "$timeout", "$routeParams", "userSvc",
+  function GalleryCtrl($scope, authService, sketchSvc, $location, $q, likeSvc, gistSvc, $timeout, $routeParams, userSvc) {
     function showActionsOnHover() {
       $(document).ready(function () {
         $(".sketch-box").dimmer({
@@ -16,6 +16,25 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
           }
         });
       });
+    }
+
+    const getGalleryOwner = () => {
+      const deferred = $q.defer();
+
+      let promise;
+      if ($routeParams.user_id) {
+        promise = userSvc.findById($routeParams.user_id);
+      } else {
+        $scope.ownGallery = true;
+        promise = authService.currentUser();
+      }
+
+      promise.then((owner) => {
+        $scope.ownerNickname = owner.nickname;
+        deferred.resolve(owner)
+      });
+
+      return deferred.promise;
     }
 
     let updateLikeStatus = () => {
@@ -40,7 +59,7 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
     };
 
     const loadSketches = (date, search) => {
-      authService.currentUser().then((user) => {
+      getGalleryOwner().then((user) => {
         sketchSvc.all({user, date, search}).then((sketches) => {
           $scope.sketches = sketches;
           updateLikeStatus().then((sketch) => {
@@ -48,9 +67,11 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
           });
         });
 
-        let isOwner = ({owner}) => owner === user.user_id;
-        $scope.canEdit = isOwner;
-        $scope.canRemove = isOwner;
+        authService.currentUser().then((currentUser) => {
+          let isOwner = ({owner}) => owner === currentUser.user_id;
+          $scope.canEdit = isOwner;
+          $scope.canRemove = isOwner;
+        });
       });
     };
 
@@ -85,6 +106,8 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
     loadSketches();
 
     $scope.edit = ({_id}) => $location.path("/editor").search({sketch_id: _id});
+
+    $scope.copy = ({ _id }) => $location.path("/editor").search({copied_sketch_id: _id});
 
     $scope.delete = ({_id}) => {
       $scope.confirmDeleteModal.modal({blurring: true,

@@ -12,16 +12,18 @@
   users="searchedUsers"
   title="Resultados para '{{searchedText}}':"
   no-users-message="No hay resultados para '{{searchedText}}'."
-  on-follow="switchFollow">
+  on-follow="switchFollow"
+  on-user-click="goToGallery">
 </users-list>
 <users-list
   ng-if="followeds.length"
   users="followeds"
   title="Seguidos"
-  on-follow="switchFollow">
+  on-follow="switchFollow"
+  on-user-click="goToGallery">
 </users-list>
 <div class="ui medium no-users">
-  <strong ng-if="!followeds && !searchedUsers">
+  <strong ng-if="!followeds.length && !searchedUsers">
     Busca amigos y empeza a seguirlos
   </strong>
 <div>

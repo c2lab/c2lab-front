@@ -84,6 +84,7 @@
                             <i class="share alternate big icon sketch-icon" data-clipboard-text="{{ shareLink(sketch._id) }}"></i>
                             <i class="github big icon sketch-icon" ng-if="canEdit(sketch)" ng-click="gistLinkFor(sketch)" id="{{ 'gist' + sketch._id }}"></i>
                             <i class="pencil big icon sketch-icon" ng-if="canEdit(sketch)" ng-click="edit(sketch)"></i>
+                            <i class="copy big icon sketch-icon" ng-if="!canEdit(sketch)" ng-click="copy(sketch)"></i>
                             <!--Add starring (personal like, other users do not see it) -->
                             <!--<i class="empty star icon sketch-icon"></i>-->
                             <i class="empty github big alternate sketch-icon"></i>
@@ -94,10 +95,14 @@
                 <img class="bordered ui image thumbnail" ng-src="{{ sketch.shownThumbnail }}">
             </div>
         </div>
-        <strong class="no-sketches-message" ng-if="!sketches.length">
-            Todavía no tenés sketches. Empezá por <a href="/#!editor">editar uno</a>!
-        </strong>
-
+        <div ng-if="!sketches.length">
+            <strong class="no-sketches-message" ng-if="ownGallery">
+                Todavía no tenés sketches. Empezá por <a href="/#!editor">editar uno</a>!
+            </strong>
+            <strong class="no-sketches-message" ng-if="!ownGallery">
+                {{ ownerNickname }} todavía no tiene sketches.
+            </strong>
+        </div>
     </div>
 </div>
 <div id="confirm-delete-modal" class="ui modal mini">
