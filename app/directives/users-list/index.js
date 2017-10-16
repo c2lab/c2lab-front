@@ -5,7 +5,7 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
     scope: {
       title: '@',
       users: '=',
-      noUsersMessage: '='
+      noUsersMessage: '@'
     },
     template: `
     <link rel="stylesheet" href="directives/users-list/index.css">

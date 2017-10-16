@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.userSvc', []).service("userSvc", ['$q', '$http', '$feathers', function($q, $http, $feathers) {
+angular.module('myApp.userSvc', []).service("userSvc", ['$feathers', function($feathers) {
   const userService = $feathers.service('users');
 
   const initUsers = (users) => users.map((user) => {
@@ -10,7 +10,7 @@ angular.module('myApp.userSvc', []).service("userSvc", ['$q', '$http', '$feather
 
   return {
     find: (search) => {
-      return userService.find({ nickname: search }).then(({ data }) => initUsers(data));
+      return userService.find({ query: { nickname: search } }).then(({ data }) => initUsers(data));
     }
   };
 }]);
