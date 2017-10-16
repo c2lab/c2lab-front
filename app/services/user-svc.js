@@ -10,7 +10,15 @@ angular.module('myApp.userSvc', []).service("userSvc", ['$feathers', function($f
 
   return {
     find: (search) => {
-      return userService.find({ query: { nickname: search } }).then(({ data }) => initUsers(data));
+      let query = {};
+      if (search) query.nickname = search;
+      return userService.find({ query }).then(({ data }) => initUsers(data));
+    },
+    findByIds: (ids) => {
+      const query = {
+        user_id: { $in: ids }
+      };
+      return userService.find({ query }).then(({ data }) => initUsers(data));
     }
   };
 }]);

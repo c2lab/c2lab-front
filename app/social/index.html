@@ -8,15 +8,17 @@
   </div>
 </div>
 <users-list
-  ng-if="followeds.length"
-  users="followeds"
-  title="Seguidos">
-</users-list>
-<users-list
   ng-if="searchedUsers"
   users="searchedUsers"
   title="Resultados para '{{searchedText}}':"
-  no-users-message="No hay resultados para '{{searchedText}}'.">
+  no-users-message="No hay resultados para '{{searchedText}}'."
+  on-follow="switchFollow">
+</users-list>
+<users-list
+  ng-if="followeds.length"
+  users="followeds"
+  title="Seguidos"
+  on-follow="switchFollow">
 </users-list>
 <div class="ui medium no-users">
   <strong ng-if="!followeds && !searchedUsers">
