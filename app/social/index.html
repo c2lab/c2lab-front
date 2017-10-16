@@ -13,9 +13,9 @@
   title="Seguidos">
 </users-list>
 <users-list
-  ng-if="followeds"
-  users="followeds"
-  title="Seguidos">
+  ng-if="searchedUsers"
+  users="searchedUsers"
+  title="Resultados para '{{searchedText}}'">
 </users-list>
 <div class="ui medium no-users">
   <strong ng-if="!followeds && !searchedUsers">

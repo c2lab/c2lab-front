@@ -29,3 +29,7 @@ body {
   font-size: x-large;
   margin-top: 5%;
 }
+
+.ui.card, .ui.cards>.card {
+  width: 230px;
+}

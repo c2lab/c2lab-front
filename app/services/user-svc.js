@@ -3,15 +3,14 @@
 angular.module('myApp.userSvc', []).service("userSvc", ['$q', '$http', '$feathers', function($q, $http, $feathers) {
   const userService = $feathers.service('users');
 
-  return {
-    find: ({ search }) => {
-      const query = { user_id: search };
+  const initUsers = (users) => users.map((user) => {
+    user.avatar = user.avatar || 'assets/no-avatar.jpg';
+    return user;
+  });
 
-      return $http({
-        method: 'GET',
-        url: `${beURL}/users`,
-        params: query
-      }).then(({ data }) => data);
+  return {
+    find: (search) => {
+      return userService.find({ nickname: search }).then(({ data }) => initUsers(data));
     }
   };
 }]);

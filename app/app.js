@@ -14,6 +14,7 @@ angular.module('myApp', [
   'myApp.exampleSvc',
   'myApp.followerSvc',
   'myApp.userSvc',
+  'myApp.usersList',
   'myApp.version',
   'myApp.likeSvc',
   'myApp.gistSvc',

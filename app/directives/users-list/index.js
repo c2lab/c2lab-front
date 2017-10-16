@@ -20,7 +20,7 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
             <div class="ui dimmer transition hidden user-box">
               <div class="content">
                 <div class="center user-icons">
-                  <h2 class="ui inverted header">{{user.name}}</h2>
+                  <h2 class="ui inverted header">{{user.nickname}}</h2>
                 </div>
               </div>
             </div>
