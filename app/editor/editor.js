@@ -5,6 +5,8 @@ angular.module('myApp.editor', [])
   .controller('EditorCtrl', ["$scope", "$routeParams", "$http", "sketchSvc", "$timeout",
     function ($scope, $routeParams, $http, sketchSvc, $timeout) {
       $scope.getPreview = function () {
+      	$scope.previewCompiling = true;
+	      $scope.previewError = false;
         $("#previewPanel").addClass("open");
         $("#previewIframe").removeAttr("src");
 
@@ -12,8 +14,16 @@ angular.module('myApp.editor', [])
             code: editor.getValue()
           })
           .then(function (previewResponse) {
+	          $scope.previewCompiling = false;
+	          $("#previewIframe")[0].contentDocument.open();//Reboot, if not it will append code
             $("#previewIframe")[0].contentDocument.write(previewResponse.data.code);
             takeScreenshots();
+          }).catch((e) => {
+	          $("#previewIframe")[0].contentDocument.open();//Reboot, if not it will append code
+	          $scope.previewCompiling = false;
+	          $('.errorLogo').transition('tada');
+	          $scope.previewError = e;
+		        console.log(e);
           });
       };
 
@@ -26,7 +36,7 @@ angular.module('myApp.editor', [])
         (function takeScreenshot() {
           let canvas = preview.getElementsByTagName("canvas")[0];
           if (canvas) {
-            takenScreenshots.push(canvas.toDataURL())
+            takenScreenshots.push(canvas.toDataURL('image/jpeg', 0.1))
           }
 
           if (takenScreenshots.length < 5) {

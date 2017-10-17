@@ -15,7 +15,13 @@
 
     <div id="previewPanel">
         <div id="previewLoader" class="ui inverted segment">
-            <div class="ui active inverted loader"></div>
+            <div class="ui active inverted loader" ng-show="previewCompiling"></div>
+            <div class="errorLogo" ng-show="previewError">
+                <img src="assets/scull.svg" width="100px" height="100px">
+                <br>
+                <br>
+                <button class="ui inverted red button">Hay un error en tu codigo !</button>
+            </div>
         </div>
         <iframe id="previewIframe" src="empty_sketch.html"></iframe>
     </div>
