@@ -4,6 +4,8 @@ angular.module('myApp.social', []).controller('SocialCtrl',
   ["$scope", "authService", "followerSvc", "$q", "userSvc", "$location",
   function SocialCtrl($scope, authService, followerSvc, $q, usersService, $location) {
     let loadFolloweds = () => {
+      $scope.loadingFolloweds = true;
+      
       authService.currentUser().then((user) => {
         followerSvc.find({ follower: user }).then((followeds) => {
           const ids = followeds.map(({following_id}) => following_id).filter(id => id);
@@ -12,10 +14,13 @@ angular.module('myApp.social', []).controller('SocialCtrl',
               $scope.followeds = followed_users;
               updateFollowStatus($scope.followeds)
               initUsersList();
+              $scope.loadingFolloweds = false;
               $scope.$apply();
             })
           } else {
             $scope.followeds = [];
+            $scope.loadingFolloweds = false;
+            $scope.$apply();
           }
         });
       });
@@ -24,11 +29,13 @@ angular.module('myApp.social', []).controller('SocialCtrl',
     loadFolloweds();
 
     $scope.search = () => {
+      $scope.loadingSearchedUsers = true;
       $scope.searchedText = $scope.textSearch;
       usersService.find($scope.textSearch).then((searchedUsers) => {
         $scope.searchedUsers = searchedUsers;
         updateFollowStatus($scope.searchedUsers)
         initUsersList();
+        $scope.loadingSearchedUsers = false;
         $scope.$apply()
       });
     };

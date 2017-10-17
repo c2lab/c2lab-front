@@ -59,11 +59,13 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
     };
 
     const loadSketches = (date, search) => {
+      $scope.loadingSketches = true;
       getGalleryOwner().then((user) => {
         sketchSvc.all({user, date, search}).then((sketches) => {
           $scope.sketches = sketches;
           updateLikeStatus().then((sketch) => {
             showActionsOnHover();
+            $scope.loadingSketches = false;
           });
         });
 

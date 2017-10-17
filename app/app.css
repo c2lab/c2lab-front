@@ -30,6 +30,10 @@ body {
   margin-top: 5%;
 }
 
-.ui.card, .ui.cards>.card {
+.ui.card.user-card {
   width: 230px;
+}
+
+.gallery-container {
+  min-height: 100%;
 }

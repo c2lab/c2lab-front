@@ -7,7 +7,8 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
       users: '=',
       noUsersMessage: '@',
       onFollow: '=',
-      onUserClick: '='
+      onUserClick: '=',
+      loading: '='
     },
     template: `
     <link rel="stylesheet" href="directives/users-list/index.css">
@@ -15,7 +16,8 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
       <h3>
         {{title}}
       </h3>
-      <div class="ui medium cards">
+      <div class="ui active loader" ng-if="loading"></div>
+      <div class="ui medium cards" ng-if="!loading">
 
         <div class="ui card user-card" ng-repeat="user in users track by $index">
           <div class="blurring dimmable image">
