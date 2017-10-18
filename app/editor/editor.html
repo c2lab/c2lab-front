@@ -30,13 +30,13 @@
         <div class="content">
             <div class="ui segments">
                 <div class="ui segment">
-                Titulo:
-                <span class="ui icon transparent input">
-                    <input id="titleInput" type="text" placeholder="my awesome sketch" ng-model="title" required>
-                </span>
-                <div ng-if="showNoTitleMessage">
-                    Agrega un titulo
-                </div>
+                    Titulo:
+                    <span class="ui icon transparent input">
+                        <input id="titleInput" type="text" placeholder="my awesome sketch" ng-model="title" required>
+                    </span>
+                    <div ng-if="showNoTitleMessage">
+                        Agrega un titulo
+                    </div>
                 </div>
                 <div class="ui secondary segment">
                     <div class="ui right labeled left icon input">
@@ -45,6 +45,10 @@
                         <a class="ui tag label" ng-click="addTag()">
                             Agrega un Tag
                         </a>
+                    </div>
+                    <div class="ui toggle checkbox" ng-show="showPremiumFeatures">
+                        <input type="checkbox" name="public" ng-model="isPrivateSketch">
+                        <label>{{ sketchStateMsg() }}</label>
                     </div>
                     <div class="ui divider"></div>
                     <div class="ui labels">

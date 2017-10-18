@@ -2,8 +2,8 @@
 
 angular.module('myApp.editor', [])
 
-  .controller('EditorCtrl', ["$scope", "$routeParams", "$http", "sketchSvc", "$timeout",
-    function ($scope, $routeParams, $http, sketchSvc, $timeout) {
+  .controller('EditorCtrl', ["$scope", "$routeParams", "$http", "sketchSvc", "$timeout", "authService",
+    function ($scope, $routeParams, $http, sketchSvc, $timeout, authService) {
       $scope.getPreview = function () {
       	$scope.previewCompiling = true;
 	      $scope.previewError = false;
@@ -60,7 +60,8 @@ angular.module('myApp.editor', [])
           title: $scope.title,
           code: editor.getValue(),
           tags: $scope.tags,
-          thumbnails: $scope.thumbnails
+          thumbnails: $scope.thumbnails,
+	        is_public: !$scope.isPrivateSketch
         };
 
         if ($scope.sketch_id) {
@@ -85,6 +86,18 @@ angular.module('myApp.editor', [])
   		  $scope.tags = $scope.tags.slice();
   		  $scope.tags.push($scope.tag);
   	  };
+
+	    $(document).ready(() => {
+		    authService.currentUser().then((user) => {
+			    $scope.showPremiumFeatures = user.user_type === 'PREM';
+		    });
+	    });
+
+	    $scope.isPrivateSketch = false;
+
+	    $scope.sketchStateMsg = () => {
+				return $scope.isPrivateSketch ? "Sketch privado" : "Sketch publico";
+	    };
 
       const editor = ace.edit("editor");
 
