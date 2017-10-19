@@ -83,8 +83,7 @@ angular.module('myApp.editor', [])
   	  }
 
   	  $scope.addTag = () => {
-  		  $scope.tags = $scope.tags.slice();
-  		  $scope.tags.push($scope.tag);
+  		  if ($scope.tag) $scope.tags = Array.from(new Set($scope.tags).add($scope.tag).values());
   	  };
 
 	    $(document).ready(() => {
