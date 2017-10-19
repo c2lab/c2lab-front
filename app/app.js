@@ -11,7 +11,6 @@ angular.module('myApp', [
   'myApp.sketchSvc',
   'myApp.editor',
   'myApp.examples',
-  'myApp.exampleSvc',
   'myApp.followerSvc',
   'myApp.userSvc',
   'myApp.usersList',

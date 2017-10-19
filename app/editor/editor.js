@@ -64,7 +64,7 @@ angular.module('myApp.editor', [])
 	        is_public: !$scope.isPrivateSketch
         };
 
-        if ($scope.sketch_id) {
+        if ($scope.sketch_id && !$routeParams.is_example) {
           sketchSvc.update($scope.sketch_id, sketch).then((sketch) => {
             console.log(`${sketch.title} was successfully updated.`)
           });

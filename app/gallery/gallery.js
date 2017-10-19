@@ -8,6 +8,7 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
         $(".sketch-box").dimmer({
           on: "hover"
         });
+
         $('.share, .github').popup({
           content: 'Link copiado en el portapapeles',
           on: 'click',

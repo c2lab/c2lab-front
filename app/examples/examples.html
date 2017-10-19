@@ -1,20 +1,24 @@
-<link rel="stylesheet" href="examples/examples.css">
+<link rel="stylesheet" href="gallery/gallery.css">
 
 <div class="ui attached segment gallery-container">
+
   <div class="ui medium cards">
-    <div class="ui card" ng-repeat="example in examples">
+
+    <div class="ui card sketch-card" ng-repeat="example in examples track by $index">
       <div class="blurring dimmable image">
         <div class="ui dimmer transition hidden sketch-box">
           <div class="content">
-            <div class="center">
+            <div class="center sketch-icons">
               <h2 class="ui inverted header">{{example.title}}</h2>
-              <i class="pencil icon sketch-icon" ng-click="edit(example)"></i>
+              <i class="pencil big icon sketch-icon" ng-click="edit(example)"></i>
             </div>
           </div>
         </div>
-        <img class="bordered ui image" ng-src={{example.previewPath}}>
+        <img class="bordered ui image thumbnail" ng-src="{{ example.shownThumbnail }}">
       </div>
     </div>
-
+    <div ng-if="!examples.length && !loadingSketches">
+      <div class="ui active loader"></div>
+    </div>
   </div>
 </div>
