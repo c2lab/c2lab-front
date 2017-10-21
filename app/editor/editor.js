@@ -8,7 +8,7 @@ angular.module('myApp.editor', [])
       	$scope.previewCompiling = true;
 	      $scope.previewError = false;
         $("#previewPanel").addClass("open");
-        $("#previewIframe").removeAttr("src");
+	      $('#previewIframe').attr('src', 'about:blank');
 
         $http.post(beURL + "/sketches/preview", {
             code: editor.getValue()
