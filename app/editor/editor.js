@@ -92,8 +92,6 @@ angular.module('myApp.editor', [])
 		    });
 	    });
 
-	    $scope.isPrivateSketch = false;
-
 	    $scope.sketchStateMsg = () => {
 				return $scope.isPrivateSketch ? "Sketch privado" : "Sketch publico";
 	    };
@@ -108,11 +106,12 @@ angular.module('myApp.editor', [])
 	    });
 
       const loadSketch =  () => {
-  	    sketchSvc.find($routeParams.sketch_id).then(({ title, code, tags, thumbnails }) => {
+  	    sketchSvc.find($routeParams.sketch_id).then(({ title, code, tags, thumbnails, is_public }) => {
   		    $scope.sketch_id = $routeParams.sketch_id;
   		    $scope.title = title;
   		    $scope.tags = tags;
           $scope.thumbnails = thumbnails;
+		      $scope.isPrivateSketch = !is_public;
   		    editor.setValue(code);
   	    });
       }
