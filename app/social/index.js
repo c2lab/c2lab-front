@@ -68,28 +68,26 @@ angular.module('myApp.social', []).controller('SocialCtrl',
 			    verbose: true,
 			    debug: true,
 			    apiSettings: {
-				    url: 'http://localhost:3000/users?nickname={query}',
-				    onResponse : function(theresponse) {
-					    console.log('B');
-					    return theresponse.data
+				    url: 'http://localhost:3000/users?nickname={query}'
+			    },
+			    fields: { results: "data" },
+			    templates: {
+				    userSearch: function (response) {
+				    	console.log("QUE PASA");
+				    	console.log(response);
+					    return response.data.map(user =>
+						    `<img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
+						 ${user.nickname}
+						 <div class="ui button"> ${user.isFollowed ? "Remove" : "Add" }</div>`
+					    ).join();
+					    // <img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
+					    //  {{ user.nickname }}
+					    // <div class="ui button" ng-click="onFollow(user)" ng-if="!user.isFollowed">Add</div>
+					    //  <div class="ui button" ng-click="onFollow(user)" ng-if="user.isFollowed">Remove</div>
 				    }
 			    },
 			    type: 'userSearch'
 		    });
-
-	    $.fn.search.settings.templates.userSearch = function(response) {
-		    console.log("asdasd");
-		    return response.data.map(user =>
-			    `<img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
-						 ${user.nickname}
-						 <div class="ui button"> ${user.isFollowed ? "Remove" : "Add" }</div>`
-		    ).join();
-		    // <img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
-		    //  {{ user.nickname }}
-		    // <div class="ui button" ng-click="onFollow(user)" ng-if="!user.isFollowed">Add</div>
-		    //  <div class="ui button" ng-click="onFollow(user)" ng-if="user.isFollowed">Remove</div>
-	    };
-
     });
 
     const updateFollowStatus = (users) => {
