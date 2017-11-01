@@ -71,21 +71,24 @@ angular.module('myApp.social', []).controller('SocialCtrl',
 			    fields: { results: "data" },
 			    templates: {
 				    userSearch: function (response) {
-					    return response.data.map(user =>
-						    `<div class="item">
+                        
+                        window.toggleUserFollowing = {}; // sacar esta magia negra de negros
+
+					    return response.data.map(user => {
+                          user.isFollowed = user.following_id;
+
+                          toggleUserFollowing[user.nickname] = $scope.switchFollow.bind(null, user);
+
+                          return `<div class="item">
                               <img class="ui avatar image" src="${user.profile_picture || user.avatar}">
                               
                               <div class="content">${user.nickname}</div>
                               
                               <div class="right floated content">
-                                  <div ng-click="onFollow(user)" class="ui button tiny"> ${user.isFollowed ? "Quitar" : "Agregar" }</div>
+                                  <div class="ui button tiny" onclick="toggleUserFollowing.${user.nickname}()"> ${user.isFollowed? "Quitar" : "Agregar" }</div>
                               </div>
-						    </div>`
-					    ).join();
-					    // <img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
-					    //  {{ user.nickname }}
-					    // <div class="ui button" ng-click="onFollow(user)" ng-if="!user.isFollowed">Add</div>
-					    //  <div class="ui button" ng-click="onFollow(user)" ng-if="user.isFollowed">Remove</div>
+						    </div>`;
+                        }).join();
 				    }
 			    },
 			    type: 'userSearch'
@@ -97,7 +100,7 @@ angular.module('myApp.social', []).controller('SocialCtrl',
         followerSvc.find({ follower: me }).then((follows) => {
           const ids = follows.map(({ following_id }) => following_id)
           users.forEach(user => {
-            user.isFollowed = ids.some(id => id === user.user_id);
+              user.isFollowed = ids.some(id => id === user.user_id);
           });
           $scope.$apply();
         });
