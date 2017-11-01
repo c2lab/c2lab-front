@@ -72,9 +72,15 @@ angular.module('myApp.social', []).controller('SocialCtrl',
 			    templates: {
 				    userSearch: function (response) {
 					    return response.data.map(user =>
-						    `<img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
-						 ${user.nickname}
-						 <div class="ui button"> ${user.isFollowed ? "Remove" : "Add" }</div>`
+						    `<div class="item">
+                              <img class="ui avatar image" src="${user.profile_picture || user.avatar}">
+                              
+                              <div class="content">${user.nickname}</div>
+                              
+                              <div class="right floated content">
+                                  <div ng-click="onFollow(user)" class="ui button tiny"> ${user.isFollowed ? "Quitar" : "Agregar" }</div>
+                              </div>
+						    </div>`
 					    ).join();
 					    // <img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
 					    //  {{ user.nickname }}
