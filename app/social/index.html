@@ -1,21 +1,21 @@
 <link rel="stylesheet" href="social/index.css">
 <div class="ui attached menu ">
-  <div class="ui category search item">
+  <div class="ui search item">
     <div class="ui transparent icon input">
       <input id="search" class="prompt" type="text" placeholder="Buscar amigos" ng-model="textSearch">
       <i class="search link icon large" ng-click="search()"></i>
     </div>
+      <div class="results"></div>
+      <!--<users-list-search-->
+              <!--ng-if="searchedUsers || loadingSearchedUsers"-->
+              <!--users="searchedUsers"-->
+              <!--no-users-message="No hay resultados para '{{searchedText}}'."-->
+              <!--on-follow="switchFollow"-->
+              <!--on-user-click="goToGallery"-->
+              <!--loading="loadingSearchedUsers">-->
+      <!--</users-list-search>-->
   </div>
 </div>
-<users-list
-  ng-if="searchedUsers || loadingSearchedUsers"
-  users="searchedUsers"
-  title="Resultados para '{{searchedText}}':"
-  no-users-message="No hay resultados para '{{searchedText}}'."
-  on-follow="switchFollow"
-  on-user-click="goToGallery"
-  loading="loadingSearchedUsers">
-</users-list>
 <users-list
   ng-if="followeds.length || loadingFolloweds"
   users="followeds"
