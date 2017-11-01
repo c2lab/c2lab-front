@@ -65,16 +65,12 @@ angular.module('myApp.social', []).controller('SocialCtrl',
     $(document).ready(() => {
 	    $('.ui.search')
 		    .search({
-			    verbose: true,
-			    debug: true,
 			    apiSettings: {
-				    url: 'http://localhost:3000/users?nickname={query}'
+				    url: `${beURL}/users?nickname={query}`
 			    },
 			    fields: { results: "data" },
 			    templates: {
 				    userSearch: function (response) {
-				    	console.log("QUE PASA");
-				    	console.log(response);
 					    return response.data.map(user =>
 						    `<img class="ui avatar image" ng-src="${user.profile_picture || user.avatar}">
 						 ${user.nickname}
