@@ -64,6 +64,7 @@ angular.module('myApp.social', []).controller('SocialCtrl',
     $(document).ready(() => {
 	    $('.ui.search')
 		    .search({
+			    cache: false,
 			    apiSettings: {
 				    url: `${beURL}/users?nickname={query}`
 			    },
