@@ -35,7 +35,7 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
                 </div>
               </div>
             </div>
-            <img class="bordered ui image thumbnail" ng-src="{{ user.avatar }}">
+            <img class="bordered ui image thumbnail" ng-src="{{ user.profile_picture || user.avatar }}">
           </div>
         </div>
         <strong class="no-users-message" ng-if="!users.length && noUsersMessage">

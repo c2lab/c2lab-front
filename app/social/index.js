@@ -44,8 +44,7 @@ angular.module('myApp.social', []).controller('SocialCtrl',
       authService.currentUser().then((me) => {
       	const data = { followed: user, follower: me };
 	      (user.isFollowed ? followerSvc.delete(data) : followerSvc.create(data)).then(() => {
-          updateFollowStatus($scope.searchedUsers);
-	        loadFolloweds();
+          updateFollowStatus([user]).then(loadFolloweds);
         })
       });
     };
@@ -77,7 +76,7 @@ angular.module('myApp.social', []).controller('SocialCtrl',
 					    return response.data.map(user => {
                           user.isFollowed = user.following_id;
 
-                          toggleUserFollowing[user.nickname] = $scope.switchFollow.bind(null, user);
+                          toggleUserFollowing[user.user_id] = $scope.switchFollow.bind(null, user);
 
                           return `<div class="item">
                               <img class="ui avatar image" src="${user.profile_picture || user.avatar}">
@@ -85,7 +84,7 @@ angular.module('myApp.social', []).controller('SocialCtrl',
                               <div class="content">${user.nickname}</div>
                               
                               <div class="right floated content">
-                                  <div class="ui button tiny" onclick="toggleUserFollowing.${user.nickname}()"> ${user.isFollowed? "Quitar" : "Agregar" }</div>
+                                  <div class="ui button tiny" onclick="toggleUserFollowing['${user.user_id}']()"> ${user.isFollowed? "Quitar" : "Agregar" }</div>
                               </div>
 						    </div>`;
                         }).join();
@@ -96,7 +95,7 @@ angular.module('myApp.social', []).controller('SocialCtrl',
     });
 
     const updateFollowStatus = (users) => {
-      authService.currentUser().then((me) => {
+      return authService.currentUser().then((me) => {
         followerSvc.find({ follower: me }).then((follows) => {
           const ids = follows.map(({ following_id }) => following_id)
           users.forEach(user => {
