@@ -79,15 +79,13 @@ angular.module('myApp.social', []).controller('SocialCtrl',
                 toggleUserFollowing[user.user_id] = $scope.switchFollow.bind(null, user);
 
                 return `<div class="item">
-                    <img class="ui avatar image" src="${user.profile_picture || user.avatar}">
-                    
+                    <img class="ui avatar image" src="${user.profile_picture || user.avatar || "assets/no-avatar.jpg"}">
                     <div class="content">${user.nickname}</div>
-                    
                     <div class="right floated content">
-                        <div class="ui button tiny" onclick="toggleUserFollowing['${user.user_id}']()"> ${user.isFollowed? "Quitar" : "Agregar" }</div>
+                        <div class="ui button" onclick="toggleUserFollowing['${user.user_id}']()"> ${user.isFollowed? "Quitar" : "Agregar" }</div>
                     </div>
 						      </div>`;
-              }).join();
+              }).join("");
 				    }
 			    },
 			    type: 'userSearch'
