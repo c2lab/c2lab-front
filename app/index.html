@@ -16,9 +16,9 @@
   <link rel="stylesheet" href="editor/editor.css">
   <link rel="stylesheet" href="app.css">
 </head>
-<body >
+<body ng-controller="mainCtrl">
 
-  <div class="ui top secondary attached menu" ng-controller="mainCtrl" ng-show="isAuthenticated()">
+  <div class="ui top secondary attached menu" ng-controller="navbarCtrl" ng-if="isAuthenticated()">
     <div class="header item">
      C2LAB
     </div>
@@ -42,18 +42,8 @@
       <a class="ui item" ng-click="logout()">
         <i class="user outline"></i>
         Logout
-      </a>
-        <!--NON SANDBOXED BUTTON, WE ARE NOT USING IT !-->
-        <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">-->
-            <!--<input type="hidden" name="notify_url" value="{{notifyUrl}}">-->
-            <!--<input type="hidden" name="custom" value="{{userId}}">-->
-            <!--<input type="hidden" name="cmd" value="_s-xclick">-->
-            <!--<input type="hidden" name="hosted_button_id" value="EA7Z9Q2N7XAQC">-->
-            <!--<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">-->
-            <!--<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
-        <!--</form>-->
-
-        <div class="ui" data-tooltip="Pasar a cuenta premium" data-position="top right" ng-show="showPayment">
+      </a ng-if="showPayment">
+        <div class="ui" data-tooltip="Pasar a cuenta premium" data-position="top right">
             <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
                 <input type="hidden" name="notify_url" value="{{notifyUrl}}">
                 <input type="hidden" name="custom" value="{{userId}}">

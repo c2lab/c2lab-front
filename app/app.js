@@ -118,25 +118,22 @@ angular.module('myApp', [
 
 }])
 
-.controller('mainCtrl', [ '$scope', 'authService', '$feathers', function ($scope, authService, $feathers) {
-	const userService = $feathers.service('users');
-
+.controller('mainCtrl', [ '$scope', 'authService', function ($scope, authService) {
   $scope.isAuthenticated = () => {
     return authService.isAuthenticated()
   };
+}])
 
+.controller('navbarCtrl', ['$scope', 'authService', function($scope, authService) {
   $scope.logout = () => authService.logout();
 
-  $scope.showPayment = false;
-
-	$(document).ready(() => {
-		authService.currentUser().then((user) => {
-			$scope.userId = user.user_id;
-			$scope.showPayment = user.user_type === 'STD';
-		});
-		$scope.notifyUrl = `${ipnURL}/ipn`;
-	});
-
+  $(document).ready(() => {
+    authService.currentUser().then((user) => {
+      $scope.userId = user.user_id;
+      $scope.showPayment = user.user_type === 'STD';
+    });
+    $scope.notifyUrl = `${ipnURL}/ipn`;
+  });    
 }])
 
 .service("authService", ["angularAuth0", "$location", "$q", "$http", "$window", function authService(angularAuth0, $location, $q, $http, $window) {
