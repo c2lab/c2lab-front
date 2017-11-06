@@ -11,14 +11,14 @@ angular.module('myApp.gistSvc', []).service("gistSvc", function () {
   }
 
   function reuseGistIfCodeDidntChange(whatHappened) {
-    if (whatHappened == "Sketch hasn't changed, show the old saved gist")
-      return `https://gist.github.com/${localStorage.getItem(sketch)}`;
+    if (whatHappened.reason == "Sketch hasn't changed, show the old saved gist")
+      return `https://gist.github.com/${localStorage.getItem(whatHappened.theSketch.name)}`;
     else
       throw "There was an error! but here's your link: WHAT IS THAT BEHIND YOU?! *runs away*";
   }
 
   function storeGistAndReturnLink(gist) {
-    localStorage.setItem(sketch, gist.id);
+    localStorage.setItem(gist.description, gist.id);
 
     return gist.html_url;
   }
@@ -39,6 +39,10 @@ angular.module('myApp.gistSvc', []).service("gistSvc", function () {
         createNewGist(sketch);
       }
       else {
+        var headers = $.ajaxSettings.headers;
+
+        delete $.ajaxSettings.headers;
+
         $.get(`https://api.github.com/gists/${gistId}`).then(function (gist) {
           var sketchGistData = gist.files["sketch.scala"];
 
@@ -51,9 +55,14 @@ angular.module('myApp.gistSvc', []).service("gistSvc", function () {
 
           getGistContents.then(function (gistContents) {
             if (areSameContents(sketch.code, gistContents))
-              shouldntCreateGist("Sketch hasn't changed, show the old saved gist");
+              shouldntCreateGist({
+                reason: "Sketch hasn't changed, show the old saved gist",
+                theSketch: sketch
+              });
             else
               createNewGist(sketch);
+          }).then(function () {
+            $.ajaxSettings.headers = headers;
           });
         });
       }
@@ -61,19 +70,30 @@ angular.module('myApp.gistSvc', []).service("gistSvc", function () {
   }
 
   function createGist(sketch) {
-    return $.ajax({
-      url: 'https://api.github.com/gists',
-      type: 'POST',
-      dataType: 'json',
-      data: JSON.stringify({
-        "description": sketch.name,
-        "public": true,
-        "files": {
-          "sketch.scala": {
-            "content": sketch.code
-          }
+    var http = new XMLHttpRequest();
+    var url = "https://api.github.com/gists";
+    var params = JSON.stringify({
+      "description": sketch.name,
+      "public": true,
+      "files": {
+        "sketch.scala": {
+          "content": sketch.code
         }
-      })
+      }
+    });
+    http.open("POST", url, true);
+
+    http.setRequestHeader("Content-type", "application/json");
+
+    return new Promise(function (resolve, reject){
+
+      http.onreadystatechange = function() {
+        if(http.status < 300 && http.readyState == XMLHttpRequest.DONE) {
+          resolve(JSON.parse(http.responseText));
+        }
+      }
+
+      http.send(params);
     });
   }
 

@@ -126,7 +126,7 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
     $scope.gistLinkFor = (sketch) => {
       gistSvc
         .getShareLinkFor(sketch)
-        .catch((x) => "asd")
+        // .catch((x) => "asd")
         .then((link) => {
           let gistIconId = "#gist" + sketch._id;
 

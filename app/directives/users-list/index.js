@@ -31,7 +31,7 @@ angular.module('myApp.usersList', []).directive("usersList", function() {
                       {{user.nickname}}
                     </h2>
                   </a>
-                  <i class="icon user-icon" ng-class="{ add: !user.isFollowed, user: !user.isFollowed, checkmark: user.isFollowed }" ng-click="onFollow(user)"></i>
+                  <i class="icon user-icon" ng-class="{ add: !user.isFollowed, user: !user.isFollowed, trash: user.isFollowed }" ng-click="onFollow(user)"></i>
                 </div>
               </div>
             </div>
