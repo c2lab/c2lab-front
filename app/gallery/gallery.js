@@ -9,11 +9,11 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
           on: "hover"
         });
 
-        $('.share, .github').popup({
+        $('.share').popup({
           content: 'Link copiado en el portapapeles',
           on: 'click',
           onVisible: () => {
-            _.delay(() => $('.share, .github').popup('hide'), 1000);
+            _.delay(() => $('.share').popup('hide'), 1000);
           }
         });
       });
@@ -124,18 +124,29 @@ angular.module('myApp.gallery', []).controller('GalleryCtrl', [
     }
 
     $scope.gistLinkFor = (sketch) => {
-      gistSvc
-        .getShareLinkFor(sketch)
-        // .catch((x) => "asd")
-        .then((link) => {
-          let gistIconId = "#gist" + sketch._id;
+      let gistIconId = "#gist" + sketch._id;
+      
+      if (sketch.gistLinkReady) {
+        new Clipboard(gistIconId);
 
-          //TODO: hacer que ande esta mierda, el navegador no llega
-          //TODO: setear el atributo antes de poder leer el puto link
-          $("#gist" + sketch._id).attr("data-clipboard-text", link);
+        $(gistIconId).popup({
+          content: 'Link copiado en el portapapeles',
+          onVisible: () => {
+            _.delay(() => $(gistIconId).popup('destroy'), 1000);
+          }
+        }).popup('show');
+      } else {
+        gistSvc
+          .getShareLinkFor(sketch)
+          // .catch((x) => "asd")
+          .then((link) => {
+            sketch.gistLinkReady = true;
 
-          new Clipboard(gistIconId);
-        });
+            //TODO: hacer que ande esta mierda, el navegador no llega
+            //TODO: setear el atributo antes de poder leer el puto link
+            $("#gist" + sketch._id).attr("data-clipboard-text", link);
+          });
+      }
     }
 
     $scope.shareLink = (sketchId) => `${window.beURL}/sketches/showcase/${sketchId}`;
