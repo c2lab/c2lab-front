@@ -5,26 +5,32 @@ angular.module('myApp.editor', [])
   .controller('EditorCtrl', ["$scope", "$routeParams", "$http", "sketchSvc", "$timeout", "authService",
     function ($scope, $routeParams, $http, sketchSvc, $timeout, authService) {
       $scope.getPreview = function () {
-      	$scope.previewCompiling = true;
-	      $scope.previewError = false;
-        $("#previewPanel").addClass("open");
-	      $('#previewIframe').attr('src', 'about:blank');
+      	if(!$scope.previewCompiling) {
+		      $scope.previewCompiling = true;
+		      $scope.previewError = false;
+		      $("#previewPanel").addClass("open");
 
-        $http.post(beURL + "/sketches/preview", {
-            code: editor.getValue()
-          })
-          .then(function (previewResponse) {
-	          $scope.previewCompiling = false;
-	          $("#previewIframe")[0].contentDocument.open();//Reboot, if not it will append code
-            $("#previewIframe")[0].contentDocument.write(previewResponse.data.code);
-            takeScreenshots();
-          }).catch((e) => {
-	          $("#previewIframe")[0].contentDocument.open();//Reboot, if not it will append code
-	          $scope.previewCompiling = false;
-	          $('.errorLogo').transition('tada');
-	          $scope.previewError = e;
-		        console.log(e);
-          });
+		      $('#previewIframe').attr('src', 'about:blank');
+		      $("#previewIframe")[0].contentWindow.location.reload();
+		      $('#previewIframeWrapper').empty().append( "<iframe id=\"previewIframe\" src=\"empty_sketch.html\"></iframe>" );
+
+		      $http.post(beURL + "/sketches/preview", {
+			      code: editor.getValue()
+		      })
+			      .then(function (previewResponse) {
+				      $scope.previewCompiling = false;
+				      $("#previewIframe")[0].contentDocument.open();//Reboot, if not it will append code
+				      $("#previewIframe")[0].contentDocument.write(previewResponse.data.code);
+				      $("#previewIframe")[0].contentDocument.close();
+				      takeScreenshots();
+			      }).catch((e) => {
+			      $("#previewIframe")[0].contentDocument.open();//Reboot, if not it will append code
+			      $scope.previewCompiling = false;
+			      $('.errorLogo').transition('tada');
+			      $scope.previewError = e;
+			      console.log(e);
+		      });
+	      }
       };
 
       let takenScreenshots = [];
